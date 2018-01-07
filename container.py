@@ -26,6 +26,8 @@ class Container(robots.Container):
 
      def setType(self, typeC, current=None):
          self.type = typeC
+         print("seteao")
+	
 
      def getType(self, current=None):
          return self.type

@@ -17,9 +17,9 @@ class Factory(robots.ControllerFactory):
     def __init__(self):
 	    pass
 
-    def make(self, robot, container_robots, key, current = None):
+    def make(self, bot, container_robots, key, current = None):
 #          if robot.ice_isA():
-           rc_servant = ControllerAttackerI(robot, container_robots, key, mines)
+           rc_servant = ControllerAttackerI(bot, container_robots, key, mines)
            rc_proxy = current.adapter.addWithUUID(rc_servant)
            #print rc_proxy
            rc_proxy = current.adapter.createDirectProxy(rc_proxy.ice_getIdentity())
