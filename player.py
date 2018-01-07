@@ -118,6 +118,7 @@ class PlayerI(drobots.Player):
         factories_container.setType("ContainerFactories")
         print( "Creating factories....")
         for i in range(0,):
+            print ("amo a linkear")
             string_prx = 'printerFactory1 -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
             factory_proxy = self.broker.stringToProxy(string_prx)
             print ("LINKEDDD")
