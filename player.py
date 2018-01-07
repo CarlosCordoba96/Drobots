@@ -87,13 +87,9 @@ class GameApp(Ice.Application):
 
         # Using "getProperty" forces to define the property "PlayerName"
         name = broker.getProperties().getProperty("PlayerName")
-
-
-
-	controller_factorys=createContainerFactories()
-       	robot_container=createContainerControllers()
-	detector_controller_fact=createDetectorController()
-
+        controller_factorys = createContainerFactories()
+        robot_container = createContainerControllers()
+        detector_controller_fact = createDetectorController()
 
         servant = PlayerI(adapter,controller_factorys,robot_container,detector_controller_fact)	#Añadido aquí container
         player_prx = adapter.addWithUUID(servant)
