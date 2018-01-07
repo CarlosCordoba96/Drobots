@@ -152,13 +152,13 @@ class PlayerI(drobots.Player):
     def makeController(self, bot, current):
 
         i=self.counter%3
-	print("robot en {}".format(str(i))
-	fact_prox=self.factory.getElementAt(i)
-	print (fact_prox)
-	factory=robots.ControllerFactoryPrx.checkedCast(fact_prox)
-	rc=factory.make(robot,self.container_robots,self.counter)
-	self.counter += 1
-	return rc
+	    print("robot en {}".format(str(i)))
+        fact_prox=self.factory.getElementAt(i)
+	    print (fact_prox)
+	    factory=robots.ControllerFactoryPrx.checkedCast(fact_prox)
+	    rc=factory.make(robot,self.container_robots,self.counter)
+	    self.counter += 1
+	    return rc
 
         
     def makeDetectorController(self, current):
