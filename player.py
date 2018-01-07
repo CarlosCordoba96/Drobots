@@ -122,7 +122,6 @@ class PlayerI(drobots.Player):
             factory_proxy = self.broker.stringToProxy(string_prx)
             print ("LINKEDDD")
             factory = drobots.FactoryPrx.checkedCast(factory_proxy)
-	
             factories_container.link(i, factory_proxy)
             if not factory:
                 raise RuntimeError('Invalid factory '+str(i)+' proxy')
