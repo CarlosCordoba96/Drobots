@@ -22,10 +22,11 @@ import sys
 
 import Ice
 
-Ice.loadSlice('drobots.ice')
-import drobots
+
+
 Ice.loadSlice('robots.ice --all -I .')
 import robots
+import drobots
 #from detectorcontroller import *
 from robotcontroller import *
 
@@ -33,43 +34,7 @@ class GameApp(Ice.Application):
     """
     Ice.Application specialization
     """
-    def createContainerFactories(self):
-        string_prx = 'container -t -e 1.1:tcp -h localhost -p 9190 -t 60000'
-        container_proxy = self.broker.stringToProxy(string_prx)
-        factories_container = drobots.ContainerPrx.checkedCast(container_proxy)
-        factories_container.setType("ContainerFactories")
-        print( "Creating factories....")
-        for i in range(0,):
-            string_prx = 'Factory -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
-            factory_proxy = self.broker.stringToProxy(string_prx)
-            print (factory_proxy)
-            factory = drobots.FactoryPrx.checkedCast(factory_proxy)
-            
-            if not factory:
-                raise RuntimeError('Invalid factory '+str(i)+' proxy')
-        
-            factories_container.link(i, factory_proxy)
-        
-        return factories_container
 
-    def createContainerControllers(self):
-        container_proxy = self.broker.stringToProxy('container -t -e 1.1:tcp -h localhost -p 9190 -t 60000')
-        controller_container = drobots.ContainerPrx.checkedCast(container_proxy)
-        controller_container.setType("ContainerController")
-
-        if not controller_container:
-            raise RuntimeError('Invalid factory proxy')
-        
-        return controller_container
-    def createDetectorController(self):
-        detector_proxy = self.broker.stringToProxy('Detector -t -e 1.1:tcp -h localhost -p 9093 -t 60000')
-        detector_factory = drobots.ContainerPrx.checkedCast(detector_proxy)
-        detector_factory.setType("ContainerController")
-
-        if not controller_container:
-            raise RuntimeError('Invalid factory proxy')
-        
-        return detector_factory
     def run(self, argv):
         """
         Entry-point method for every Ice.Application object.
@@ -87,11 +52,10 @@ class GameApp(Ice.Application):
 
         # Using "getProperty" forces to define the property "PlayerName"
         name = broker.getProperties().getProperty("PlayerName")
-        controller_factorys = createContainerFactories()
-        robot_container = createContainerControllers()
-        detector_controller_fact = createDetectorController()
 
-        servant = PlayerI(adapter,controller_factorys,robot_container,detector_controller_fact)	#Añadido aquí container
+
+
+        servant = PlayerI(broker,adapter)	
         player_prx = adapter.addWithUUID(servant)
         player_prx = drobots.PlayerPrx.uncheckedCast(player_prx)
         adapter.activate()
@@ -131,12 +95,14 @@ class PlayerI(drobots.Player):
 
     It responds correctly to makeController, win, lose or gameAbort.
     """
-    def __init__(self, adapter, factory, container, dcontroller):
+    def __init__(self,broker, adapter):
         self.adapter = adapter
-        self.factory = factory
-        self.container = container
-        self.dcontroller = dcontroller
+        self.broker = broker
+        self.factory = self.createContainerFactories()
+        self.container = self.createContainerControllers()
+        self.dcontroller = None#self.createDetectorController()
         #self.detector_controller = None
+        self.counter = 0
         self.mine_index = 0
         self.mines = [
             drobots.Point(x=100, y=100),
@@ -145,16 +111,56 @@ class PlayerI(drobots.Player):
             drobots.Point(x=300, y=300),
         ]
 
+    def createContainerFactories(self):
+        string_prx = 'container -t -e 1.1:tcp -h localhost -p 9190 -t 60000'
+        container_proxy = self.broker.stringToProxy(string_prx)
+        factories_container = robots.ContainerPrx.checkedCast(container_proxy)
+        factories_container.setType("ContainerFactories")
+        print( "Creating factories....")
+        for i in range(0,):
+            string_prx = 'Factory -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
+            factory_proxy = self.broker.stringToProxy(string_prx)
+            print (factory_proxy)
+            factory = drobots.FactoryPrx.checkedCast(factory_proxy)
+            
+            if not factory:
+                raise RuntimeError('Invalid factory '+str(i)+' proxy')
+        
+            factories_container.link(i, factory_proxy)
+        
+        return factories_container
+
+    def createContainerControllers(self):
+        container_proxy = self.broker.stringToProxy('container -t -e 1.1:tcp -h localhost -p 9190 -t 60000')
+        controller_container = robots.ContainerPrx.checkedCast(container_proxy)
+        controller_container.setType("ContainerController")
+
+        if not controller_container:
+            raise RuntimeError('Invalid factory proxy')
+        
+        return controller_container
+    def createDetectorController(self):
+        detector_proxy = self.broker.stringToProxy('Detector -t -e 1.1:tcp -h localhost -p 9093 -t 60000')
+        detector_factory = robots.ContainerPrx.uncheckedCast(detector_proxy)
+        detector_factory.setType("Detector")
+
+        if not controller_container:
+            raise RuntimeError('Invalid factory proxy')
+        
+        return detector_factory
+
     def makeController(self, bot, current):
 
-        print("Make controller received bot {}".format(bot))
-        robot_id = str(bot)+str(random(randint(0,99)))
-        controller = self.factory.make(bot,container,robot_id,mines)
-        object_prx = current.adapter.addWithUUID(controller)
-        controller_prx = drobots.RobotControllerPrx.checkedCast(object_prx)
+        i=self.counter%3
+	print("robot en {}".format(str(i))
+	fact_prox=self.factory.getElementAt(i)
+	print (fact_prox)
+	factory=robots.ControllerFactoryPrx.checkedCast(fact_prox)
+	rc=factory.make(robot,self.container_robots,self.counter)
+	self.counter += 1
+	return rc
 
-        return controller_prx
-
+        
     def makeDetectorController(self, current):
         """
         Pending implementation:

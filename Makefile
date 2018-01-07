@@ -10,12 +10,13 @@ all:
 	gnome-terminal --tab -e "make run-container"
 	gnome-terminal --tab -e "make run-player2"
 	make run-player
+	make run-player2
 
 run-player:
 	python3 player.py --Ice.Config=player.config 
 
 run-player2:
-	python3 player2.py --Ice.Config=player2.config 
+	gnome-terminal --tab -e "python3 player.py --Ice.Config=player2.config" 
 
 run-factory1:
 	gnome-terminal --tab -e "python factory.py --Ice.Config=Factory1.config"

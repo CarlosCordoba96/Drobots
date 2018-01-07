@@ -25,7 +25,8 @@ class Factory(robots.ControllerFactory):
            rc_proxy = current.adapter.createDirectProxy(rc_proxy.ice_getIdentity())
            container_robots.link(key, rc_proxy)
            rc = robots.RobotControllerAttackerPrx.checkedCast(rc_proxy)
-
+           print("Creado Robot controller..."+ str(rc))
+	
            rc.setContainer(container_robots)
            return rc
 
