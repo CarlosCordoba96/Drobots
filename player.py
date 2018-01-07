@@ -118,15 +118,16 @@ class PlayerI(drobots.Player):
         factories_container.setType("ContainerFactories")
         print( "Creating factories....")
         for i in range(0,):
-            string_prx = 'Factory -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
+            string_prx = 'printerFactory1 -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
             factory_proxy = self.broker.stringToProxy(string_prx)
-            print (factory_proxy)
+            print ("LINKEDDD")
             factory = drobots.FactoryPrx.checkedCast(factory_proxy)
-            
+	
+            factories_container.link(i, factory_proxy)
             if not factory:
                 raise RuntimeError('Invalid factory '+str(i)+' proxy')
         
-            factories_container.link(i, factory_proxy)
+
         
         return factories_container
 
