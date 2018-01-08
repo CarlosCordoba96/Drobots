@@ -167,7 +167,7 @@ class PlayerI(drobots.Player):
 
         
     def makeDetectorController(self, current):
-        print('PlayerI.makeDetectorController')
+        print('DETECTOR CONTROLLERR')
         detector_controller = self.dcontroller.make(self.container)
 	
         return detector_controller
