@@ -8,9 +8,7 @@ SERVER = factory
 all:
 	gnome-terminal --tab -e "make run-all-factories"
 	gnome-terminal --tab -e "make run-container"
-	gnome-terminal --tab -e "make run-player2"
 	make run-player
-	make run-player2
 
 run-player:
 	python3 player.py --Ice.Config=player.config 

@@ -100,8 +100,8 @@ class PlayerI(drobots.Player):
         self.broker = broker
         self.factory = self.createContainerFactories()
         self.container = self.createContainerControllers()
-        self.dcontroller = None#self.createDetectorController()
-        #self.detector_controller = None
+        self.dcontroller =self.createDetectorController()
+        self.detector_controller = None
         self.counter = 0
         self.mine_index = 0
         self.mines = [
@@ -135,7 +135,7 @@ class PlayerI(drobots.Player):
 
     def createContainerControllers(self):
         container_proxy = self.broker.stringToProxy('container -t -e 1.1:tcp -h localhost -p 9190 -t 60000')
-        controller_container = robots.ContainerPrx.checkedCast(container_proxy)
+        controller_container = robots.ContainerPrx.uncheckedCast(container_proxy)
         controller_container.setType("ContainerController")
 
         if not controller_container:
@@ -144,13 +144,13 @@ class PlayerI(drobots.Player):
         return controller_container
     def createDetectorController(self):
         detector_proxy = self.broker.stringToProxy('Detector -t -e 1.1:tcp -h localhost -p 9093 -t 60000')
-        detector_factory = robots.ContainerPrx.uncheckedCast(detector_proxy)
-        detector_factory.setType("Detector")
+        detector_factory = robots.DetectorControllerfactoryPrx.uncheckedCast(detector_proxy)
 
-        if not controller_container:
+        if not detector_factory:
             raise RuntimeError('Invalid factory proxy')
         
         return detector_factory
+
 
     def makeController(self, bot, current):
         i = self.counter % 3
@@ -159,28 +159,18 @@ class PlayerI(drobots.Player):
         fact_prox = self.factory.getElementAt(i)
         print (fact_prox)
         factory = robots.ControllerFactoryPrx.checkedCast(fact_prox)
-        rc = factory.make(robot, self.container_robots, self.counter)
+        rc = factory.make(bot, self.container, self.counter)
         self.counter += 1
+        print("se devuelve good")	
         return rc
 
 
         
     def makeDetectorController(self, current):
-        """
-        Pending implementation:
-        DetectorController* makeDetectorController();
-        """
-        print("Make detector controller.")
-
-        if self.detector_controller is not None:
-            return self.detector_controller
-
-        controller = makeController(container)
-        object_prx = current.adapter.addWithUUID(controller)
-        self.detector_controller = \
-            drobots.DetectorControllerPrx.checkedCast(object_prx)
-        return self.detector_controller
-
+        print('PlayerI.makeDetectorController')
+        detector_controller = self.dcontroller.make(self.container)
+	
+        return detector_controller
     def getMinePosition(self, current):
 
         pos = self.mines[self.mine_index]

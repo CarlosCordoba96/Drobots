@@ -18,8 +18,8 @@ dictionary<int, Object*> ProxyDictionary;
 
      };
 
-     interface DetectorController {
-    DetectorController* make(Container* Container);
+     interface DetectorControllerfactory {
+     drobots::DetectorController* make(Container* Container);
   };
 
      interface RobotControllerAttacker extends drobots::RobotController {

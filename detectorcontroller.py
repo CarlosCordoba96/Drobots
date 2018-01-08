@@ -7,9 +7,10 @@ import Ice
 
 Ice.loadSlice('robots.ice --all -I .')
 import robots
-Ice.loadSlice('drobots.ice')
 import drobots
 class DetectorControllerI(drobots.DetectorController):
+    def __init__(self,Container):
+	self.container=Container
     """
     DetectorController interface implementation.
 
@@ -62,20 +63,18 @@ class ControllerI(drobots.RobotController):
         """
         pass
 
-class DetectorControllerFactoryI(drobots.DetectorController):
-    def __init__(self):
-        self.proxy = None # dc proxy patern
-
-    def make(self, robotContainer, current = None):
-        if self.proxy == None:
-            servant = DetectorControllerI(robotContainer)
-            proxy = current.adapter.addWithUUID(servant)
-            proxy = current.adapter.createDirectProxy(proxy.ice_getIdentity())
-            proxy = drobots.DetectorControllerPrx.uncheckedCast(proxy)
-            print('Creando detector controller ' + str(proxy))
-            sys.stdout.flush()
-            self.proxy = proxy
-        return self.proxy
+class DetectorControllerFactoryI(robots.DetectorControllerfactory):
+    def make(self, Container, current = None):
+        print("aqui va bien 1")
+        servant = DetectorControllerI(Container)
+        print("aqui va bien 2")
+        proxy = current.adapter.addWithUUID(servant)
+        print("aqui va bien 3")
+        print(proxy)
+        print("aqui va bien 4")	
+        proxy = drobots.DetectorControllerPrx.checkedCast(proxy)
+        print(proxy)
+        return proxy
 
 class DetectorControllerFactoryServer(Ice.Application):
     def run(self, argv):
@@ -85,9 +84,10 @@ class DetectorControllerFactoryServer(Ice.Application):
         proxy = adapter.add(servant,
                             broker.stringToIdentity("Detector"))
         print(proxy)
+        adapter.activate()
         sys.stdout.flush()
 
-        adapter.activate()
+
         self.shutdownOnInterrupt()
         broker.waitForShutdown()
 

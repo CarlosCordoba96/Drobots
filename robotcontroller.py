@@ -18,7 +18,7 @@ class ControllerAttackerI(drobots.RobotController):
     The implementation only retrieve and print the location of the assigned
     robot
     """
-    def __init__(self, bot, container, key, mines):
+    def __init__(self, bot, container, key,):
         """
         ControllerI constructor. Accepts only a "bot" argument, that should be
         a RobotPrx object, usually sent by the game server.
@@ -26,8 +26,10 @@ class ControllerAttackerI(drobots.RobotController):
         self.bot = bot
         self.container = container
         self.key = key
-        self.mines = mines
-
+        #self.mines = mines
+    def setContainer(self, c, current=None):
+        self.container = c
+	
     def turn(self, current):
         """
         Method that will be invoked remotely by the server. In this method we

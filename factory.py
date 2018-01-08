@@ -19,16 +19,18 @@ class Factory(robots.ControllerFactory):
 
     def make(self, bot, container_robots, key, current = None):
 #          if robot.ice_isA():
-           rc_servant = ControllerAttackerI(bot, container_robots, key, mines)
+           rc_servant = ControllerAttackerI(bot, container_robots, key)
            rc_proxy = current.adapter.addWithUUID(rc_servant)
-           #print rc_proxy
+           print rc_proxy
            rc_proxy = current.adapter.createDirectProxy(rc_proxy.ice_getIdentity())
-           container_robots.link(key, rc_proxy)
-           rc = robots.RobotControllerAttackerPrx.checkedCast(rc_proxy)
+           rc = robots.RobotControllerAttackerPrx.uncheckedCast(rc_proxy)
            print("Creado Robot controller..."+ str(rc))
 	
-           rc.setContainer(container_robots)
+           #rc.setContainer(container_robots)
+           print("Se hace return chu")
            return rc
+ 
+
 
 class ServerFactory(Ice.Application):
     def run(self, argv):
