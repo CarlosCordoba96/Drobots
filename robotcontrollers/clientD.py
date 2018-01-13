@@ -24,7 +24,7 @@ import Ice
 
 Ice.loadSlice('drobots.ice')
 import drobots
-import time, random, math
+import random
 from robotState import *
 
 

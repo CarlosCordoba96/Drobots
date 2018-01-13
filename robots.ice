@@ -23,12 +23,11 @@ dictionary<int, Object*> ProxyDictionary;
   };
 
      interface RobotControllerAttacker extends drobots::RobotController {
-         void setContainer(Container* container);
-         void friendPosition(drobots::Point point, int id);
+         void allies(drobots::Point point, int id);
      };
+     exception IndexError{};
 
      interface RobotControllerDefender extends drobots::RobotController {
-         void setContainer(Container* container);
-         void friendPosition(drobots::Point point, int id);
+         void allies(drobots::Point point, int id);
      };
 };

@@ -32,57 +32,24 @@ class DetectorControllerI(drobots.DetectorController):
             robots_detected, pos.x, pos.y))
 
 
-class ControllerI(drobots.RobotController):
-    """
-    RobotController interface implementation.
-
-    The implementation only retrieve and print the location of the assigned
-    robot
-    """
-    def __init__(self, bot, mines):
-        """
-        ControllerI constructor. Accepts only a "bot" argument, that should be
-        a RobotPrx object, usually sent by the game server.
-        """
-        self.bot = bot
-        self.mines = mines
-
-    def turn(self, current):
-        """
-        Method that will be invoked remotely by the server. In this method we
-        should communicate with out Robot
-        """
-        location = self.bot.location()
-        print("Turn of {} at location {},{}".format(
-            id(self), location.x, location.y))
-
-    def robotDestroyed(self, current):
-        """
-        Pending implementation:
-        void robotDestroyed();
-        """
-        pass
-
 class DetectorControllerFactoryI(robots.DetectorControllerfactory):
+    def __init__(self):
+        self.proxy=None
     def make(self, Container, current = None):
-        print("aqui va bien 1")
-        servant = DetectorControllerI(Container)
-        print("aqui va bien 2")
-        proxy = current.adapter.addWithUUID(servant)
-        print("aqui va bien 3")
-        print(proxy)
-        print("aqui va bien 4")	
-        proxy = drobots.DetectorControllerPrx.checkedCast(proxy)
-        print(proxy)
-        return proxy
+        if self.proxy is None:
+            servant = DetectorControllerI(Container)
+            proxy = current.adapter.addWithUUID(servant)
+            proxy = drobots.DetectorControllerPrx.checkedCast(proxy)
+            self.proxy=proxy
+
+        return self.proxy
 
 class DetectorControllerFactoryServer(Ice.Application):
     def run(self, argv):
         broker = self.communicator()
         servant = DetectorControllerFactoryI()
         adapter = broker.createObjectAdapter("DetectorAdapter")
-        proxy = adapter.add(servant,
-                            broker.stringToIdentity("Detector"))
+        proxy = adapter.add(servant,broker.stringToIdentity("Detector"))
         print(proxy)
         adapter.activate()
         sys.stdout.flush()

@@ -114,10 +114,7 @@ class PlayerI(drobots.Player):
         return mines
 
     def createContainerFactories(self):
-        string_prx = 'container -t -e 1.1:tcp -h localhost -p 9190 -t 60000'
-        container_proxy = self.broker.stringToProxy(string_prx)
-        factories_container = robots.ContainerPrx.checkedCast(container_proxy)
-        factories_container.setType("ContainerFactories")
+        factories_list=[]
         print( "Creating factories....")
         for i in range(0,3):
             string_prx = 'printerFactory1 -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
@@ -126,14 +123,10 @@ class PlayerI(drobots.Player):
             print ("proxy:")
             print (factory_proxy)
             factory = robots.ControllerFactoryPrx.uncheckedCast(factory_proxy)
-	
-
             if not factory:
                 raise RuntimeError('Invalid factory '+str(i)+' proxy')
-            factories_container.link(i, factory_proxy)
-
-        
-        return factories_container
+            factories_list.append(factory)
+        return factories_list
 
     def createContainerControllers(self):
         container_proxy = self.broker.stringToProxy('container -t -e 1.1:tcp -h localhost -p 9190 -t 60000')
@@ -157,11 +150,11 @@ class PlayerI(drobots.Player):
     def makeController(self, bot, current):
         i = self.counter % 3
         print("robot en {}".format(str(i)))
-
-        fact_prox = self.factory.getElementAt(i)
+        fact_prox=self.factory[i]
         print (fact_prox)
         factory = robots.ControllerFactoryPrx.checkedCast(fact_prox)
         rc = factory.make(bot, self.container, self.counter,self.mines)
+        self.container.link(self.counter,rc)
         self.counter += 1
         print("se devuelve good")	
         return rc
