@@ -11,10 +11,10 @@ dictionary<int, Object*> ProxyDictionary;
          void setType(string type);
          string getType();
      };
-
+      sequence <drobots::Point> mines;
 
      interface ControllerFactory {
-         drobots::RobotController* make(drobots::Robot* bot, Container* container, int key);
+         drobots::RobotController* make(drobots::Robot* bot, Container* container, int key, mines minas);
 
      };
 

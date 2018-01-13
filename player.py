@@ -19,7 +19,7 @@ This implementation lacks:
 """
 
 import sys
-
+import random
 import Ice
 
 
@@ -104,12 +104,14 @@ class PlayerI(drobots.Player):
         self.detector_controller = None
         self.counter = 0
         self.mine_index = 0
-        self.mines = [
-            drobots.Point(x=100, y=100),
-            drobots.Point(x=100, y=300),
-            drobots.Point(x=300, y=100),
-            drobots.Point(x=300, y=300),
-        ]
+        self.mines = self.createMines()
+
+    def createMines(self):
+        mines=[]
+        for i in range(0,4):
+           mine=random.sample(range(0,399),2)
+           mines.append(drobots.Point(x=mine[0],y=mine[1]))
+        return mines
 
     def createContainerFactories(self):
         string_prx = 'container -t -e 1.1:tcp -h localhost -p 9190 -t 60000'
@@ -159,7 +161,7 @@ class PlayerI(drobots.Player):
         fact_prox = self.factory.getElementAt(i)
         print (fact_prox)
         factory = robots.ControllerFactoryPrx.checkedCast(fact_prox)
-        rc = factory.make(bot, self.container, self.counter)
+        rc = factory.make(bot, self.container, self.counter,self.mines)
         self.counter += 1
         print("se devuelve good")	
         return rc

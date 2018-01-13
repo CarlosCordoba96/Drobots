@@ -17,7 +17,7 @@ class Factory(robots.ControllerFactory):
     def __init__(self):
 	    pass
 
-    def make(self, bot, container_robots, key, current = None):
+    def make(self, bot, container_robots, key,minas, current = None):
 #          if robot.ice_isA():
            rc_servant = ControllerAttackerI(bot, container_robots, key)
            rc_proxy = current.adapter.addWithUUID(rc_servant)
@@ -35,12 +35,9 @@ class Factory(robots.ControllerFactory):
 class ServerFactory(Ice.Application):
     def run(self, argv):
         broker = self.communicator()
-        
         servant = Factory()
-
-	adapter = broker.createObjectAdapter("FactoryAdapter")
-        proxy = adapter.add(servant,
-                            broker.stringToIdentity("printerFactory1"))
+        adapter=broker.createObjectAdapter("FactoryAdapter")
+        proxy = adapter.add(servant,broker.stringToIdentity("printerFactory1"))
        
 	
         print(proxy) #'factory1 -t -e 1.1:tcp -h ' +my ip +' -p 9091 -t 60000'
