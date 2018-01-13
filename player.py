@@ -105,6 +105,7 @@ class PlayerI(drobots.Player):
         self.counter = 0
         self.mine_index = 0
         self.mines = self.createMines()
+        self.natackers=0
 
     def createMines(self):
         mines=[]
@@ -153,7 +154,9 @@ class PlayerI(drobots.Player):
         fact_prox=self.factory[i]
         print (fact_prox)
         factory = robots.ControllerFactoryPrx.checkedCast(fact_prox)
-        rc = factory.make(bot, self.container, self.counter,self.mines)
+        rc = factory.make(bot, self.container, self.counter,self.mines,self.natackers)
+        if bot.ice_isA("::drobots::Attacker"):
+            self.natackers=self.natackers+1
         self.container.link(self.counter,rc)
         self.counter += 1
         print("se devuelve good")	

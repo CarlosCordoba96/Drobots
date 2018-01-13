@@ -14,7 +14,7 @@ dictionary<int, Object*> ProxyDictionary;
       sequence <drobots::Point> mines;
 
      interface ControllerFactory {
-         drobots::RobotController* make(drobots::Robot* bot, Container* container, int key, mines minas);
+         drobots::RobotController* make(drobots::Robot* bot, Container* container, int key, mines minas,int nattackers);
 
      };
 
