@@ -10,23 +10,15 @@ import math
 import random
 
 class ControllerDefenderI(robots.RobotControllerDefender):
-    """
-    RobotController interface implementation.
 
-    The implementation only retrieve and print the location of the assigned
-    robot
-    """
-    def __init__(self, bot, container,key): #mines, x, y):	#, key):
-        """
-        ControllerI constructor. Accepts only a "bot" argument, that should be
-        a RobotPrx object, usually sent by the game server.
-        """
+    def __init__(self, bot, container, mines, key):
+
         self.bot = bot
         self.container = container
         self.state = State.MOVING
 
         self.key = key
-        #self.mines = mines
+        self.mines = mines
 
         self.vel = 0
         self.energia = 0
@@ -51,19 +43,17 @@ class ControllerDefenderI(robots.RobotControllerDefender):
             self.handlers[self.state]()
         except drobots.NoEnoughEnergy:
             pass
-        #location = self.bot.location()
-        #print("Turn of {} at location {},{}".format(id(self), location.x, location.y))
-        #except(drobots.NoEnoughEnergy):
-        #   pass
+        location = self.bot.location()
+        print("Turn of {} at location {},{}".format(id(self), location.x, location.y))
 
     def play(self):
         my_location = self.bot.location()
 
-        #for i in range(0,3):
-        #    attacker_prx = self.container.getElementAt(i)
-        #    attacker = drobots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
-        #    attacker.friendPosition(my_location, i)
-        self.state = State.SCANNING	#Quitar esto luego
+        for i in range(0,3):
+            attacker_prx = self.container.getElementAt(i)
+            attacker = robots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
+            attacker.allies(my_location, i)
+        self.state = State.SCANNING
 
 
     #MOVING
@@ -92,8 +82,12 @@ class ControllerDefenderI(robots.RobotControllerDefender):
              self.vel = 100
         #El bloque if/elif de arriba podria sobrar en ambos
 
-        print("Move of {} at location {},{}, angle {}".format(id(self), location.x, location.y,direction))
-        self.bot.drive(direction,100)
+        if (self.avoidMine()==True):
+             #Si la velocidad no es 0, se mueve con la definida.
+             print("Move of {} from location {},{}, angle {}".format(id(self), location.x, location.y,direction))
+
+             self.bot.drive(direction,100)
+             self.vel = 100
         self.state = State.PLAYING
 
 
@@ -129,42 +123,30 @@ class ControllerDefenderI(robots.RobotControllerDefender):
             self.state = State.MOVING
             pass
 
-    #def (SEARCH & REGISTER FOR DEFF ALLIES)
-
     def robotDestroyed(self, current):
-        """
-        Pending implementation:
-        void robotDestroyed();
-        """
+
         print('Defender was destroyed')
         pass
 
 class ControllerAttackerI(robots.RobotControllerAttacker):
-    """
-    RobotController interface implementation.
 
-    The implementation only retrieve and print the location of the assigned
-    robot
-    """
-    def __init__(self, bot, container,key): #mines, x, y):	#, key):
-        """
-        ControllerI constructor. Accepts only a "bot" argument, that should be
-        a RobotPrx object, usually sent by the game server.
-        """
+    def __init__(self, bot, container, mines, key): 
+
         self.bot = bot
         self.container = container
         self.state = State.MOVING
 
         self.key = key
-        #self.mines = mines
+        self.mines = mines
 
         self.vel = 0
         self.energia = 0
         self.x = 100
         self.y = 100
         self.angle = 0
-        self.damage_taken = 0
+        #self.damage_taken = 0
         self.allies_pos = dict()
+
         self.handlers = {
             State.MOVING : self.move,
             State.SHOOTING : self.shoot,
@@ -187,11 +169,11 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
     def play(self):
         my_location = self.bot.location()
 
-        #for i in range(0,3):
-        #    defender_prx = self.container.getElementAt(i)
-        #    defender = drobots.RobotControllerAttackerPrx.uncheckedCast(defender_prx)
-        #    defender.allies(my_location, i)
-        self.state = State.SHOOTING	#Quitar esta linea luego
+        for i in range(0,3):
+            defender_prx = self.container.getElementAt(i)
+            defender = robots.RobotControllerDefenderPrx.uncheckedCast(defender_prx)
+            defender.allies(my_location, i)
+            self.state = State.SHOOTING
 
 
     #MOVING
@@ -207,22 +189,32 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
              self.bot.drive(random.randint(0,360),100)
              self.vel = 100
         elif (location.x > 350):
-             self.bot.drive(225, 50) #100
-             self.vel = 100
+             self.bot.drive(225, 50)
+             self.vel = 50
         elif (location.x < 50):
-             self.bot.drive(45, 50) #100
-             self.vel = 100
+             self.bot.drive(45, 50)
+             self.vel = 50
         elif (location.y > 350):
-             self.bot.drive(315, 50) #100
-             self.vel = 100
+             self.bot.drive(315, 50)
+             self.vel = 50
         elif (location.y < 50):
-             self.bot.drive(135, 50) #100
-             self.vel = 100
+             self.bot.drive(135, 50)
+             self.vel = 50
 
-        print("Move of {} at location {},{}, angle {}".format(id(self), location.x, location.y,direction))
-        self.bot.drive(direction,100)
+	
+        if (self.avoidMine()==True):
+             #Si la velocidad no es 0, se mueve con la definida.
+             print("Move of {} from location {},{}, angle {}".format(id(self), location.x, location.y,direction))
+             self.bot.drive(direction,100)
+             self.vel = 100
         self.state = State.PLAYING
 
+    def avoidMine(self):
+        avoid = True
+        for mine in self.mines:
+             if (self.x == mine.x and self.y == mine.y):
+                  return False
+        return True
 
     def recalculate_angle(self, x, y, current=None):
         if x == 0:
@@ -246,19 +238,30 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
         try:
             angle = self.angle + random.randint(0, 360)
             distance = random.randint(20,100)
-            self.bot.cannon(angle,distance)
-            self.state = State.SHOOTING
-            print("Shooting towards {} , {}m of distance".format(angle, distance))
+            if(self.avoidAlly(angle,distance) == True):
+                self.bot.cannon(angle,distance)
+                self.state = State.SHOOTING
+                print("Shooting towards {} , {}m of distance".format(angle, distance))
+            #else:
+            #    self.shoot()
         except drobots.NoEnoughEnergy:
             self.state = State.MOVING
             pass
 
-    #def (SEARCH & REGISTER FOR DEFF ALLIES)
+    def avoidAlly(self, angle, distance):
+        avoided = True
+        location = self.bot.location()
+        new_x = (distance * sin(angle)) + location.x
+        new_y = (distance * cos(angle)) + location.y
+        for key, value in allies_pos.items():
+            if (new_x == allies_pos[key].x and new_y == allies_pos[key].y):
+                print("Attacker robot avoided shooting his ally {}.".format(key))
+                avoided = False
+        return avoided
+
+    #def (SEARCH & REGISTER FOR DEFF ALLIES) NO SE PUEDE HACER TAL CUAL PORQUE DEVUELVE NÚMERO EN UN ÁNGULO, NO POSICIONES
 
     def robotDestroyed(self, current):
-        """
-        Pending implementation:
-        void robotDestroyed();
-        """
+
         print('Attacker was destroyed')
         pass
