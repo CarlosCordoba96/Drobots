@@ -17,14 +17,14 @@ class Factory(robots.ControllerFactory):
 
     def make(self, bot, container_robots, key,minas,nattackers, current = None):
         if bot.ice_isA("::drobots::Attacker") and nattackers<2:
-           rc_servant = ControllerAttackerI(bot, container_robots, key)
+           rc_servant = ControllerAttackerI(bot, container_robots,minas, key)
            rc_proxy = current.adapter.addWithUUID(rc_servant)
            print rc_proxy
            print "Robot attacker"
            rc_proxy = current.adapter.createDirectProxy(rc_proxy.ice_getIdentity())
            rc = robots.RobotControllerAttackerPrx.uncheckedCast(rc_proxy)
         else:
-            rc_servant = ControllerDefenderI(bot, container_robots, key)
+            rc_servant = ControllerDefenderI(bot, container_robots,minas, key)
             rc_proxy = current.adapter.addWithUUID(rc_servant)
             print rc_proxy
             print "Robot defender"

@@ -90,6 +90,12 @@ class ControllerDefenderI(robots.RobotControllerDefender):
              self.vel = 100
         self.state = State.PLAYING
 
+    def avoidMine(self):
+        avoid = True
+        for mine in self.mines:
+             if (self.x == mine.x and self.y == mine.y):
+                  return False
+        return True
 
     def recalculate_angle(self, x, y, current=None):
         if x == 0:
@@ -251,15 +257,15 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
     def avoidAlly(self, angle, distance):
         avoided = True
         location = self.bot.location()
-        new_x = (distance * sin(angle)) + location.x
-        new_y = (distance * cos(angle)) + location.y
-        for key, value in allies_pos.items():
-            if (new_x == allies_pos[key].x and new_y == allies_pos[key].y):
+        new_x = (distance * math.sin(angle)) + location.x
+        new_y = (distance * math.cos(angle)) + location.y
+        for key, value in self.allies_pos.items():
+            if (new_x == self.allies_pos[key].x and new_y == self.allies_pos[key].y):
                 print("Attacker robot avoided shooting his ally {}.".format(key))
                 avoided = False
         return avoided
 
-    #def (SEARCH & REGISTER FOR DEFF ALLIES) NO SE PUEDE HACER TAL CUAL PORQUE DEVUELVE NÚMERO EN UN ÁNGULO, NO POSICIONES
+    #def (SEARCH & REGISTER FOR DEFF ALLIES) NO SE PUEDE HACER TAL CUAL PORQUE DEVUELVE NUMERO EN UN ANGULO, NO POSICIONES
 
     def robotDestroyed(self, current):
 
