@@ -17,16 +17,16 @@ run-player2:
 	gnome-terminal -e "python3 player.py --Ice.Config=player2.config" 
 
 run-factory1:
-	gnome-terminal -e "python factory.py --Ice.Config=Factory1.config"
+	gnome-terminal -e "python3 factory.py --Ice.Config=Factory1.config"
 
 run-factory2:
-	gnome-terminal -e "python factory.py --Ice.Config=Factory2.config"
+	gnome-terminal -e "python3 factory.py --Ice.Config=Factory2.config"
 
 run-factory3:
-	gnome-terminal -e "python factory.py --Ice.Config=Factory3.config"
+	gnome-terminal -e "python3 factory.py --Ice.Config=Factory3.config"
 
 run-detector:
-	gnome-terminal -e "python detectorcontroller.py --Ice.Config=Detector.config"
+	gnome-terminal -e "python3 detectorcontroller.py --Ice.Config=Detector.config"
 
 run-all-factories:
 	make -j run-factory1 run-factory2 run-factory3 run-detector

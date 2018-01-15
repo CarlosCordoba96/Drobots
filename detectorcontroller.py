@@ -10,7 +10,7 @@ import robots
 import drobots
 class DetectorControllerI(drobots.DetectorController):
     def __init__(self,Container):
-	self.container=Container
+        self.container=Container
     """
     DetectorController interface implementation.
 
