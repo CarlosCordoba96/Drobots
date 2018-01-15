@@ -32,11 +32,16 @@ class ControllerDefenderI(robots.RobotControllerDefender):
             State.SCANNING : self.scan,
             State.PLAYING : self.play
         }
+        self.enemies_pos=[]
 
 
 
     def allies(self, point, id_bot, current=None):
         self.allies_pos[id_bot]= point
+        
+
+
+
 
     def turn(self, current):
         try:
@@ -82,7 +87,7 @@ class ControllerDefenderI(robots.RobotControllerDefender):
              self.vel = 100
         #El bloque if/elif de arriba podria sobrar en ambos
 
-        if (self.avoidCollision(direction, vel)==True):
+        if (self.avoidCollision(direction,self. vel)==True):
              #Si la velocidad no es 0, se mueve con la definida.
              print("Move of {} from location {},{}, angle {}º".format(id(self), location.x, location.y,direction))
              self.bot.drive(direction,100)
@@ -173,7 +178,8 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
     def enemies(self, point, current=None):
         for key, value in self.allies_pos.items():
              if (point.x != self.allies_pos[key].x and point.y != self.allies_pos[key].y):
-        self.enemies_pos.append(point)
+                 if not(point in enemies_pos):
+                     self.enemies_pos.append(point)
 
     def turn(self, current):
         try:
@@ -220,7 +226,7 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
              self.vel = 100
         #El bloque if/elif de arriba podria sobrar en ambos
 
-        if (self.avoidCollision(direction, vel)==True):
+        if (self.avoidCollision(direction,self.vel)==True):
              #Si la velocidad no es 0, se mueve con la definida.
              print("Move of {} from location {},{}, angle {}º".format(id(self), location.x, location.y,direction))
              self.bot.drive(direction,100)
@@ -262,7 +268,7 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
 
     def shoot(self):
         try:
-            if not enemies_pos:
+            if not self.enemies_pos:
                 angle = self.angle + random.randint(0, 360)
                 distance = random.randint(60,100)
             else:

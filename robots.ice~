@@ -29,7 +29,6 @@ dictionary<int, Object*> ProxyDictionary;
 
      interface RobotControllerDefender extends drobots::RobotController {
          void allies(drobots::Point point, int id);
-         void enemies(drobots::Point point);
      };
 
 };
