@@ -21,12 +21,12 @@ class ControllerDefenderI(robots.RobotControllerDefender):
         self.mines = mines
 
         self.vel = 0
-        self.energia = 0
+        #self.energia = 0
         self.x = 100
         self.y = 100
         self.angle = 0
-        #self.damage_taken = 0
         self.allies_pos = dict()
+
         self.handlers = {
             State.MOVING : self.move,
             State.SCANNING : self.scan,
@@ -82,19 +82,26 @@ class ControllerDefenderI(robots.RobotControllerDefender):
              self.vel = 100
         #El bloque if/elif de arriba podria sobrar en ambos
 
-        if (self.avoidMine()==True):
+        if (self.avoidCollision(direction, vel)==True):
              #Si la velocidad no es 0, se mueve con la definida.
-             print("Move of {} from location {},{}, angle {}".format(id(self), location.x, location.y,direction))
-
+             print("Move of {} from location {},{}, angle {}º".format(id(self), location.x, location.y,direction))
              self.bot.drive(direction,100)
              self.vel = 100
         self.state = State.PLAYING
 
-    def avoidMine(self):
+    def avoidCollision(self, direction, vel):
         avoid = True
-        for mine in self.mines:
-             if (self.x == mine.x and self.y == mine.y):
-                  return False
+        for distance in range (1, vel):
+             new_x = (distance * math.sin(direction)) + self.x
+             new_y = (distance * math.cos(direction)) + self.y
+             for mine in self.mines:
+                  if (new_x == mine.x and nex_y == mine.y):
+                       print("Not moving to avoid a mine")
+                       return False
+             for key, value in self.allies_pos.items():
+                  if (new_x == self.allies_pos[key].x and nex_y == self.allies_pos[key].y):
+                       print("Not moving to avoid colliding an ally")
+                       return False
         return True
 
     def recalculate_angle(self, x, y, current=None):
@@ -146,12 +153,11 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
         self.mines = mines
 
         self.vel = 0
-        self.energia = 0
         self.x = 100
         self.y = 100
         self.angle = 0
-        #self.damage_taken = 0
         self.allies_pos = dict()
+        self.enemies_pos = []
 
         self.handlers = {
             State.MOVING : self.move,
@@ -162,7 +168,12 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
 
 
     def allies(self, point, id_bot, current=None):
-        self.allies_pos[id_bot]= point
+        self.allies_pos[id_bot] = point
+
+    def enemies(self, point, current=None):
+        for key, value in self.allies_pos.items():
+             if (point.x != self.allies_pos[key].x and point.y != self.allies_pos[key].y):
+        self.enemies_pos.append(point)
 
     def turn(self, current):
         try:
@@ -195,31 +206,40 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
              self.bot.drive(random.randint(0,360),100)
              self.vel = 100
         elif (location.x > 350):
-             self.bot.drive(225, 50)
-             self.vel = 50
+             self.bot.drive(225, 50) #100
+             self.vel = 100
         elif (location.x < 50):
-             self.bot.drive(45, 50)
-             self.vel = 50
-        elif (location.y > 350):
-             self.bot.drive(315, 50)
-             self.vel = 50
-        elif (location.y < 50):
-             self.bot.drive(135, 50)
-             self.vel = 50
+             self.bot.drive(45, 50) #100
+             self.vel = 100
 
-	
-        if (self.avoidMine()==True):
+        elif (location.y > 350):
+             self.bot.drive(315, 50) #100
+             self.vel = 100
+        elif (location.y < 50):
+             self.bot.drive(135, 50) #100
+             self.vel = 100
+        #El bloque if/elif de arriba podria sobrar en ambos
+
+        if (self.avoidCollision(direction, vel)==True):
              #Si la velocidad no es 0, se mueve con la definida.
-             print("Move of {} from location {},{}, angle {}".format(id(self), location.x, location.y,direction))
+             print("Move of {} from location {},{}, angle {}º".format(id(self), location.x, location.y,direction))
              self.bot.drive(direction,100)
              self.vel = 100
         self.state = State.PLAYING
 
-    def avoidMine(self):
+    def avoidCollision(self, direction, vel):
         avoid = True
-        for mine in self.mines:
-             if (self.x == mine.x and self.y == mine.y):
-                  return False
+        for distance in range (1, vel):
+             new_x = (distance * math.sin(direction)) + self.x
+             new_y = (distance * math.cos(direction)) + self.y
+             for mine in self.mines:
+                  if (new_x == mine.x and nex_y == mine.y):
+                       print("Not moving to avoid a mine")
+                       return False
+             for key, value in self.allies_pos.items():
+                  if (new_x == self.allies_pos[key].x and nex_y == self.allies_pos[key].y):
+                       print("Not moving to avoid colliding an ally")
+                       return False
         return True
 
     def recalculate_angle(self, x, y, current=None):
@@ -242,14 +262,23 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
 
     def shoot(self):
         try:
-            angle = self.angle + random.randint(0, 360)
-            distance = random.randint(20,100)
+            if not enemies_pos:
+                angle = self.angle + random.randint(0, 360)
+                distance = random.randint(60,100)
+            else:
+                location = self.bot.location()
+                aim = enemies_pos[randint(1, len(enemies_pos))]
+                new_x = aim.x - location.x
+                new_y = aim.y - location.y
+                angle = int(round(self.recalculate_angle(new_x, new_y), 0))
+                distance = math.hypot(new_x, new_y)
+                if (distance > 100):
+                     distance = 100
             if(self.avoidAlly(angle,distance) == True):
                 self.bot.cannon(angle,distance)
                 self.state = State.SHOOTING
-                print("Shooting towards {} , {}m of distance".format(angle, distance))
-            #else:
-            #    self.shoot()
+                print("Shooting towards {}º , {}m of distance".format(angle, distance))
+
         except drobots.NoEnoughEnergy:
             self.state = State.MOVING
             pass
@@ -259,8 +288,13 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
         location = self.bot.location()
         new_x = (distance * math.sin(angle)) + location.x
         new_y = (distance * math.cos(angle)) + location.y
+        #Setting the square where the explossion reaches
+        min_x = new_x - 50
+        min_y = new_y - 50
+        max_x = new_x + 50
+        max_y = new_y + 50
         for key, value in self.allies_pos.items():
-            if (new_x == self.allies_pos[key].x and new_y == self.allies_pos[key].y):
+            if (self.allies_pos[key].x > min_x and self.allies_pos[key].y > min_y and self.allies_pos[key].x < max_x and self.allies_pos[key].y < max_y):
                 print("Attacker robot avoided shooting his ally {}.".format(key))
                 avoided = False
         return avoided

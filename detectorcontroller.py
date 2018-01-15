@@ -10,26 +10,17 @@ import robots
 import drobots
 class DetectorControllerI(drobots.DetectorController):
     def __init__(self,Container):
-        self.container=Container
-    """
-    DetectorController interface implementation.
+	self.container=Container
 
-    It implements the alert method.
-
-    Remember: every alert call will include de position, so there is no need
-    to create a DetectorControllerI servant for every detector, you can re-use
-    the same servant (and its proxy) to every "makeDetectorController" petition
-    on the PlayerI
-    """
     def alert(self, pos, robots_detected, current):
-        """
-        Method that receives a Point with the coordinates where the detector is
-        placed and the number of robots around it. This method is only invoked
-        when at least 1 robot is near to the detector. If there is no robots
-        around it, this method will never be called.
-        """
+
         print("Alert: {} robots detected at {},{}".format(
             robots_detected, pos.x, pos.y))
+        for i in range(0,3):
+            attacker_prx = self.container.getElementAt(i)
+            attacker = robots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
+            attacker.enemies(pos)
+
 
 
 class DetectorControllerFactoryI(robots.DetectorControllerfactory):
