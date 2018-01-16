@@ -32,7 +32,7 @@ run-all-factories:
 	make -j run-factory1 run-factory2 run-factory3 run-detector
 
 run-container:
-	python container.py --Ice.Config=Container.config
+	python3 container.py --Ice.Config=Container.config
 
 run-game-factory:
 	firefox http://atclab.esi.uclm.es/drobots/canvas.html?p=FactoryRobots &
