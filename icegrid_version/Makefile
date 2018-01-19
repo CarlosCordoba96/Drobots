@@ -16,9 +16,9 @@ dir:
 	mkdir -p grid/node3
 
 opennodes:
-	icegridnode --Ice.Config = node1.config
-	icegridnode --Ice.Config = node2.config
-	icegridnode --Ice.Config = node3.config
+	gnome-terminal -e "icegridnode --Ice.Config=node1.config"
+	gnome-terminal -e "icegridnode --Ice.Config=node2.config"
+	gnome-terminal -e "icegridnode --Ice.Config=node3.config"
 
 #closegrid:
 #	killall icegridnode
