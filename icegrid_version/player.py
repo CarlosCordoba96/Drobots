@@ -31,7 +31,8 @@ class GameApp(Ice.Application):
 
         servant = PlayerI(broker,adapter)	
         player_prx = adapter.addWithUUID(servant)
-        player_prx = drobots.PlayerPrx.uncheckedCast(player_prx)
+        direct_ply = adapter.createDirectProxy(player_prx.ice_getIdentity()) #Añadido
+        player = drobots.PlayerPrx.uncheckedCast(direct_ply)
         adapter.activate()
 
         #proxy_game = broker.propertyToProxy('Player') 
@@ -115,7 +116,7 @@ class PlayerI(drobots.Player):
 
     def createDetectorController(self):
         detector_proxy = self.broker.stringToProxy('Detector -t -e 1.1:tcp -h localhost -p 9093 -t 60000')
-        detector_factory = robots.DetectorControllerfactoryPrx.uncheckedCast(detector_proxy)
+        detector_factory = robots.DetectorControllerfactoryPrx.checkedCast(detector_proxy)
 
         if not detector_factory:
             raise RuntimeError('Invalid factory proxy')
@@ -126,7 +127,8 @@ class PlayerI(drobots.Player):
     def makeController(self, bot, current):
         i = self.counter % 3
         print("robot en {}".format(str(i)))
-        fact_prox=self.factory[i]
+        #fact_prox=self.factory[i]
+        factory_prox = self.broker.stringToProxy("factory"+str(self.factory))
         print (fact_prox)
         factory = robots.ControllerFactoryPrx.checkedCast(fact_prox)
         rc = factory.make(bot, self.container, self.counter,self.mines,self.natackers)
