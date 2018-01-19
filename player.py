@@ -130,9 +130,13 @@ class PlayerI(drobots.Player):
         print (fact_prox)
         factory = robots.ControllerFactoryPrx.checkedCast(fact_prox)
         rc = factory.make(bot, self.container, self.counter,self.mines,self.natackers)
-        if bot.ice_isA("::drobots::Attacker"):
+
+        if bot.ice_isA("::drobots::Attacker") and self.natackers<2:
             self.natackers=self.natackers+1
-        self.container.link(self.counter,rc)
+            type="a"
+        else:
+            type="d"
+        self.container.link(self.counter,rc,type)
         self.counter += 1
         print("se devuelve good")	
         return rc

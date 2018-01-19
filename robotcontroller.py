@@ -26,7 +26,6 @@ class ControllerDefenderI(robots.RobotControllerDefender):
         self.y = 100
         self.angle = 0
         self.allies_pos = dict()
-
         self.handlers = {
             State.MOVING : self.move,
             State.SCANNING : self.scan,
@@ -35,6 +34,8 @@ class ControllerDefenderI(robots.RobotControllerDefender):
 
     def allies(self, point, id_bot, current=None):
         self.allies_pos[id_bot]= point
+
+
 
     def turn(self, current):
         try:
@@ -93,11 +94,11 @@ class ControllerDefenderI(robots.RobotControllerDefender):
              new_x = (distance * math.sin(direction)) + self.x
              new_y = (distance * math.cos(direction)) + self.y
              for mine in self.mines:
-                  if (new_x == mine.x and nex_y == mine.y):
+                  if (new_x == mine.x and new_y == mine.y):
                        print("Not moving to avoid a mine")
                        return False
              for key, value in self.allies_pos.items():
-                  if (new_x == self.allies_pos[key].x and nex_y == self.allies_pos[key].y):
+                  if (new_x == self.allies_pos[key].x and new_y == self.allies_pos[key].y):
                        print("Not moving to avoid colliding an ally")
                        return False
         return True
@@ -171,7 +172,7 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
     def enemies(self, point, current=None):
         for key, value in self.allies_pos.items():
              if (point.x != self.allies_pos[key].x and point.y != self.allies_pos[key].y):
-                 if not(point in enemies_pos):
+                 if not(point in self.enemies_pos):
                      self.enemies_pos.append(point)
 
     def turn(self, current):
@@ -232,11 +233,11 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
              new_x = (distance * math.sin(direction)) + self.x
              new_y = (distance * math.cos(direction)) + self.y
              for mine in self.mines:
-                  if (new_x == mine.x and nex_y == mine.y):
+                  if (new_x == mine.x and new_y == mine.y):
                        print("Not moving to avoid a mine")
                        return False
              for key, value in self.allies_pos.items():
-                  if (new_x == self.allies_pos[key].x and nex_y == self.allies_pos[key].y):
+                  if (new_x == self.allies_pos[key].x and new_y == self.allies_pos[key].y):
                        print("Not moving to avoid colliding an ally")
                        return False
         return True
@@ -266,7 +267,7 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
                 distance = random.randint(60,100)
             else:
                 location = self.bot.location()
-                aim = enemies_pos[randint(1, len(enemies_pos))]
+                aim = self.enemies_pos[random.randint(0, len(self.enemies_pos)-1)]
                 new_x = aim.x - location.x
                 new_y = aim.y - location.y
                 angle = int(round(self.recalculate_angle(new_x, new_y), 0))

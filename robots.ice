@@ -2,14 +2,15 @@
 
 module robots {
 dictionary<int, Object*> ProxyDictionary;
-
+sequence <int> attackerslist;
      interface Container {
-         void link(int key, Object* proxy);
+         void link(int key, Object* proxy,string type);
          void unlink(int key);
          ProxyDictionary list();
          Object* getElementAt(int key);
          void setType(string type);
          string getType();
+         attackerslist getAttackers();
      };
       sequence <drobots::Point> mines;
 
