@@ -30,8 +30,9 @@ class GameApp(Ice.Application):
 
 
         servant = PlayerI(broker,adapter)	
-        player_prx = adapter.addWithUUID(servant)
-        player_prx = drobots.PlayerPrx.uncheckedCast(player_prx)
+        indirect_prx = adapter.addWithUUID(servant)
+        direct_ply = adapter.createDirectProxy(indirect_prx.ice_getIdentity()) #Añadido
+        player_prx = drobots.PlayerPrx.uncheckedCast(direct_ply)
         adapter.activate()
 
         #proxy_game = broker.propertyToProxy('Player') 
