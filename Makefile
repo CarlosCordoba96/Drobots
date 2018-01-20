@@ -38,5 +38,5 @@ run-game-factory:
 	firefox http://atclab.esi.uclm.es/drobots/canvas.html?p=FactoryRobots &
 
 clean:
-	sudo rm -f code/*.pyc
+	sudo rm -f *.pyc
 	sudo killall -q -9 python

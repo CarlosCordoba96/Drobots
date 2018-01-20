@@ -9,10 +9,19 @@ class Container(robots.Container):
 
      def __init__(self, current=None):
          self.proxies = dict()
+         self.attackers=[]
+         self.deffenders=[]
 
-     def link(self, key, proxy, current=None):
+     def link(self, key, proxy,type, current=None):
          print("{0}: link: {1} -> {2}".format(self.type, key, proxy))
          self.proxies[key] = proxy
+         if type == "a":
+             self.attackers.append(key)
+         else:
+             self.deffenders.append(key)
+
+     def getAttackers(self,current=None):
+         return self.attackers
 
      def unlink(self, key, current=None):
          print("{0}: unlink: {1}".format(self.type, key))

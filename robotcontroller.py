@@ -79,7 +79,6 @@ class ControllerDefenderI(robots.RobotControllerDefender):
         elif (location.y < 50):
              self.bot.drive(135, 50) #100
              self.vel = 100
-        #El bloque if/elif de arriba podria sobrar en ambos
 
         if (self.avoidCollision(direction,self. vel)==True):
              #Si la velocidad no es 0, se mueve con la definida.
@@ -119,7 +118,7 @@ class ControllerDefenderI(robots.RobotControllerDefender):
         else:
             return 270 - math.degrees(math.atan(float(x)/float(y)))
 
-    #SHOOTING
+    #SCANNING
 
     def scan(self):
         try:
@@ -211,7 +210,6 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
         elif (location.x < 50):
              self.bot.drive(45, 50) #100
              self.vel = 100
-
         elif (location.y > 350):
              self.bot.drive(315, 50) #100
              self.vel = 100

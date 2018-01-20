@@ -17,6 +17,8 @@ class DetectorControllerI(drobots.DetectorController):
 
         print("Alert: {} robots detected at {},{}".format(
             robots_detected, pos.x, pos.y))
+        list=self.container.getAttackers()
+        print(list)
         for i in range(0,3):
             attacker_prx = self.container.getElementAt(i)
             attacker = robots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)

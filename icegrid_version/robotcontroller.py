@@ -21,7 +21,6 @@ class ControllerDefenderI(robots.RobotControllerDefender):
         self.mines = mines
 
         self.vel = 0
-        #self.energia = 0
         self.x = 100
         self.y = 100
         self.angle = 0
@@ -78,7 +77,6 @@ class ControllerDefenderI(robots.RobotControllerDefender):
         elif (location.y < 50):
              self.bot.drive(135, 50) #100
              self.vel = 100
-        #El bloque if/elif de arriba podria sobrar en ambos
 
         if (self.avoidCollision(direction,self. vel)==True):
              #Si la velocidad no es 0, se mueve con la definida.
@@ -118,15 +116,13 @@ class ControllerDefenderI(robots.RobotControllerDefender):
         else:
             return 270 - math.degrees(math.atan(float(x)/float(y)))
 
-    #SHOOTING
+    #SCANNING
 
     def scan(self):
         try:
             angle = random.randint(0, 360)
         except IndexError:
-            self.angles_left_to_scan = self.Allangles[:]
-            random.shuffle(self.angles_left_to_scan)
-            current_angle = self.angles_left_to_scan.pop()
+            angle = 90		#Por ejemplo
         try:
             enemies = self.bot.scan(angle, 20)
             print("Found {} enemies in {}  direction.".format(enemies, angle))
@@ -210,7 +206,6 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
         elif (location.x < 50):
              self.bot.drive(45, 50) #100
              self.vel = 100
-
         elif (location.y > 350):
              self.bot.drive(315, 50) #100
              self.vel = 100

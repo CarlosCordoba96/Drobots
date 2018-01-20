@@ -1,12 +1,13 @@
 #!/usr/bin/make -f
 # -*- mode:makefile -*-
 
+.PHONY: all dir opennodes clean
 ADMIN = icegridadmin --Ice.Config=locator.config -u user -p pass
 
 all:
 	make dir
 	make opennodes
-	icegrid-gui
+	gnome-terminal -e "icegrid-gui"
 
 dir:
 	mkdir -p grid

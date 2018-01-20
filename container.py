@@ -19,6 +19,7 @@ class Container(robots.Container):
              self.attackers.append(key)
          else:
              self.deffenders.append(key)
+
      def getAttackers(self,current=None):
          return self.attackers
 
