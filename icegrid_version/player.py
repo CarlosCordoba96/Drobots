@@ -92,8 +92,8 @@ class PlayerI(drobots.Player):
     def createContainerFactories(self):
         factories_list=[]
         print( "Creating factories....")
-        for i in range(0,3):
-            string_prx = 'printerFactory1 -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
+        for i in range(0,2):
+            string_prx = 'RCFactory -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
             print (string_prx)
             factory_proxy = self.broker.stringToProxy(string_prx)
             print ("proxy:")
@@ -107,7 +107,7 @@ class PlayerI(drobots.Player):
     def createContainerControllers(self):
         container_proxy = self.broker.stringToProxy('container -t -e 1.1:tcp -h localhost -p 9190 -t 60000')
         controller_container = robots.ContainerPrx.uncheckedCast(container_proxy)
-        controller_container.setType("ContainerController")
+        #controller_container.setType("ContainerController")
 
         if not controller_container:
             raise RuntimeError('Invalid factory proxy')

@@ -1,0 +1,16 @@
+Creating factories....
+RCFactory -t -e 1.1:tcp -h localhost -p 9090 -t 60000
+proxy:
+RCFactory -t -e 1.1:tcp -h localhost -p 9090 -t 60000
+RCFactory -t -e 1.1:tcp -h localhost -p 9091 -t 60000
+proxy:
+RCFactory -t -e 1.1:tcp -h localhost -p 9091 -t 60000
+Connecting to game None with nickname 
+Creating factories....
+RCFactory -t -e 1.1:tcp -h localhost -p 9090 -t 60000
+proxy:
+RCFactory -t -e 1.1:tcp -h localhost -p 9090 -t 60000
+RCFactory -t -e 1.1:tcp -h localhost -p 9091 -t 60000
+proxy:
+RCFactory -t -e 1.1:tcp -h localhost -p 9091 -t 60000
+Connecting to game None with nickname 

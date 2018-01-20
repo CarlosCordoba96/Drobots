@@ -1,0 +1,14 @@
+2018-01-20 13:54:13.015563 Player: error: Traceback (most recent call last):
+  File "/home/alumno/.local/lib/python3.5/site-packages/Ice/__init__.py", line 1574, in doMain
+    status = self.run(args)
+  File "./player.py", line 45, in run
+    game_prx.login(player_prx, name)
+AttributeError: 'NoneType' object has no attribute 'login'
+
+2018-01-20 13:54:16.148579 Player: error: Traceback (most recent call last):
+  File "/home/alumno/.local/lib/python3.5/site-packages/Ice/__init__.py", line 1574, in doMain
+    status = self.run(args)
+  File "./player.py", line 45, in run
+    game_prx.login(player_prx, name)
+AttributeError: 'NoneType' object has no attribute 'login'
+
