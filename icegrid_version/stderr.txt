@@ -1,0 +1,31 @@
+2018-01-20 20:31:09.502800 Player: error: Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/Ice.py", line 1218, in doMain
+    status = self.run(args)
+  File "./player.py", line 45, in run
+    game_prx.login(player_prx, name)
+AttributeError: 'NoneType' object has no attribute 'login'
+
+2018-01-20 20:35:10.422957 Player: error: Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/Ice.py", line 1218, in doMain
+    status = self.run(args)
+  File "./player.py", line 25, in run
+    game_prx = drobots.GamePrx.checkedCast(game_prx)
+  File "robots.ice", line 785, in checkedCast
+Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
+{
+    kindOfObject = object
+    id = drobots10
+}
+
+2018-01-20 20:37:39.511356 Player: error: Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/Ice.py", line 1218, in doMain
+    status = self.run(args)
+  File "./player.py", line 25, in run
+    game_prx = drobots.GamePrx.checkedCast(game_prx)
+  File "robots.ice", line 785, in checkedCast
+Ice.DNSException: exception ::Ice::DNSException
+{
+    error = -2
+    host = atclab.esi.uclm.es
+}
+
