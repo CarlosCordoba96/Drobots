@@ -91,7 +91,7 @@
          </icebox>
       </server-template>
       <node name="node1">
-         <server id="Container" activation="always" exe="./container.py" ice-version="3.5.1" pwd="/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/">
+         <server id="Container" activation="always" exe="./container.py" ice-version="3.5.1" pwd=".">
             <env>Ice.StdErr=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-err.txt</env>
             <env>Ice.StdOut=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-out.txt</env>
             <properties>
@@ -100,7 +100,7 @@
                <object identity="container" type="::drobots::Container" property="Identity"/>
             </adapter>
          </server>
-         <server id="Player" activation="manual" exe="./player.py" ice-version="3.5.1" pwd="/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/">
+         <server id="Player" activation="manual" exe="./player.py" ice-version="3.5.1" pwd=".">
             <properties>
                <property name="Player.Locator" value="IceGrid/Locator -t:tcp -h atclab.esi.uclm.es -p 4061"/>
                <property name="Ice.StdOut" value="/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-out.txt"/>
@@ -108,7 +108,7 @@
             </properties>
             <adapter name="PlayerAdapter" endpoints="tcp" id="${server}.PlayerAdapter"/>
          </server>
-         <server id="RCFactory1" activation="always" exe="./factory.py" ice-version="3.5.1" pwd="/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/">
+         <server id="RCFactory1" activation="always" exe="./factory.py" ice-version="3.5.1" pwd=".">
             <env>Ice.StdErr=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-err.txt</env>
             <env>Ice.StdOut=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-out.txt</env>
             <properties>
@@ -119,7 +119,7 @@
          </server>
       </node>
       <node name="node2">
-         <server id="Detector" activation="always" exe="./detectorcontroller.py" ice-version="3.5.1" pwd="/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/">
+         <server id="Detector" activation="always" exe="./detectorcontroller.py" ice-version="3.5.1" pwd=".">
             <env>Ice.StdErr=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-err.txt</env>
             <env>Ice.StdOut=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-out.txt</env>
             <properties>
@@ -128,7 +128,7 @@
                <object identity="Detector" type="::drobots::DetectorController" property="Identity"/>
             </adapter>
          </server>
-         <server id="RCFactory2" activation="always" exe="./factory.py" ice-version="3.5.1" pwd="/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/">
+         <server id="RCFactory2" activation="always" exe="./factory.py" ice-version="3.5.1" pwd=".">
             <env>Ice.StdErr=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-err.txt</env>
             <env>Ice.StdOut=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-out.txt</env>
             <properties>
@@ -139,7 +139,7 @@
          </server>
       </node>
       <node name="node3">
-         <server id="RCFactory3" activation="always" exe="./factory.py" ice-version="3.5.1" pwd="/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/">
+         <server id="RCFactory3" activation="always" exe="./factory.py" ice-version="3.5.1" pwd=".">
             <env>Std.Err=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-err.txt</env>
             <env>Std.Out=/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/server-out.txt</env>
             <properties>
