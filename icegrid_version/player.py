@@ -31,8 +31,7 @@ class GameApp(Ice.Application):
 
         servant = PlayerI(broker,adapter)	
         player_prx = adapter.addWithUUID(servant)
-        direct_ply = adapter.createDirectProxy(player_prx.ice_getIdentity()) #Añadido
-        player_prx = drobots.PlayerPrx.uncheckedCast(direct_ply)
+        player_prx = drobots.PlayerPrx.uncheckedCast(player_prx)
         adapter.activate()
 
         #proxy_game = broker.propertyToProxy('Player') 
@@ -92,8 +91,8 @@ class PlayerI(drobots.Player):
     def createContainerFactories(self):
         factories_list=[]
         print( "Creating factories....")
-        for i in range(0,2):
-            string_prx = 'RCFactory -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
+        for i in range(0,3):
+            string_prx = 'printerFactory1 -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
             print (string_prx)
             factory_proxy = self.broker.stringToProxy(string_prx)
             print ("proxy:")
@@ -107,7 +106,7 @@ class PlayerI(drobots.Player):
     def createContainerControllers(self):
         container_proxy = self.broker.stringToProxy('container -t -e 1.1:tcp -h localhost -p 9190 -t 60000')
         controller_container = robots.ContainerPrx.uncheckedCast(container_proxy)
-        #controller_container.setType("ContainerController")
+        controller_container.setType("ContainerController")
 
         if not controller_container:
             raise RuntimeError('Invalid factory proxy')
@@ -116,7 +115,7 @@ class PlayerI(drobots.Player):
 
     def createDetectorController(self):
         detector_proxy = self.broker.stringToProxy('Detector -t -e 1.1:tcp -h localhost -p 9093 -t 60000')
-        detector_factory = robots.DetectorControllerfactoryPrx.checkedCast(detector_proxy)
+        detector_factory = robots.DetectorControllerfactoryPrx.uncheckedCast(detector_proxy)
 
         if not detector_factory:
             raise RuntimeError('Invalid factory proxy')
@@ -127,14 +126,17 @@ class PlayerI(drobots.Player):
     def makeController(self, bot, current):
         i = self.counter % 3
         print("robot en {}".format(str(i)))
-        #fact_prox=self.factory[i]
-        fact_prox = self.broker.stringToProxy("factory"+str(self.factory))
+        fact_prox=self.factory[i]
         print (fact_prox)
         factory = robots.ControllerFactoryPrx.checkedCast(fact_prox)
         rc = factory.make(bot, self.container, self.counter,self.mines,self.natackers)
-        if bot.ice_isA("::drobots::Attacker"):
+
+        if bot.ice_isA("::drobots::Attacker") and self.natackers<2:
             self.natackers=self.natackers+1
-        self.container.link(self.counter,rc)
+            type="a"
+        else:
+            type="d"
+        self.container.link(self.counter,rc,type)
         self.counter += 1
         print("se devuelve good")	
         return rc

@@ -22,16 +22,14 @@ class Factory(robots.ControllerFactory):
            print (rc_proxy)
            print ("Robot attacker")
            rc_proxy = current.adapter.createDirectProxy(rc_proxy.ice_getIdentity())
-
-           rc = robots.RobotControllerAttackerPrx.checkedCast(rc_proxy)
+           rc = robots.RobotControllerAttackerPrx.uncheckedCast(rc_proxy)
         else:
             rc_servant = ControllerDefenderI(bot, container_robots,minas, key)
             rc_proxy = current.adapter.addWithUUID(rc_servant)
             print (rc_proxy)
             print ("Robot defender")
             rc_proxy = current.adapter.createDirectProxy(rc_proxy.ice_getIdentity())
-
-            rc = robots.RobotControllerDefenderPrx.checkedCast(rc_proxy)
+            rc = robots.RobotControllerDefenderPrx.uncheckedCast(rc_proxy)
 
         return rc
  
@@ -42,7 +40,8 @@ class ServerFactory(Ice.Application):
         broker = self.communicator()
         servant = Factory()
         adapter=broker.createObjectAdapter("FactoryAdapter")
-        proxy = adapter.add(servant,broker.stringToIdentity("RCFactory"))
+        proxy = adapter.add(servant,broker.stringToIdentity("printerFactory1"))
+       
 	
         print(proxy) #'factory1 -t -e 1.1:tcp -h ' +my ip +' -p 9091 -t 60000'
 #pero... 8727385C-A64E-44C5-8888-8ED6F14B16EC -t -e 1.1:tcp -h 192.168.1.41 -p 9090 -t 60000:tcp -h 161.67.172.84 -p 9090 -t 60000
@@ -53,6 +52,8 @@ class ServerFactory(Ice.Application):
 
         return 0
 
-if __name__ == '__main__':
-        factory = ServerFactory()
-        sys.exit(factory.main(sys.argv))
+
+factory = ServerFactory()
+sys.exit(factory.main(sys.argv))
+
+

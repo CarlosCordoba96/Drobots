@@ -12,3 +12,51 @@ AttributeError: 'NoneType' object has no attribute 'login'
     game_prx.login(player_prx, name)
 AttributeError: 'NoneType' object has no attribute 'login'
 
+2018-01-20 23:02:29.217948 Player: error: Traceback (most recent call last):
+  File "/home/alumno/.local/lib/python3.5/site-packages/Ice/__init__.py", line 1574, in doMain
+    status = self.run(args)
+  File "./player.py", line 25, in run
+    game_prx = drobots.GamePrx.checkedCast(game_prx)
+  File "robots.ice", line 801, in checkedCast
+Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
+{
+    kindOfObject = object
+    id = drobots10
+}
+
+2018-01-20 23:02:34.337180 Player: error: Traceback (most recent call last):
+  File "/home/alumno/.local/lib/python3.5/site-packages/Ice/__init__.py", line 1574, in doMain
+    status = self.run(args)
+  File "./player.py", line 25, in run
+    game_prx = drobots.GamePrx.checkedCast(game_prx)
+  File "robots.ice", line 801, in checkedCast
+Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
+{
+    kindOfObject = object
+    id = drobots10
+}
+
+2018-01-20 23:04:20.160472 Player: error: Traceback (most recent call last):
+  File "/home/alumno/.local/lib/python3.5/site-packages/Ice/__init__.py", line 1574, in doMain
+    status = self.run(args)
+  File "./player.py", line 25, in run
+    game_prx = drobots.GamePrx.checkedCast(game_prx)
+  File "robots.ice", line 801, in checkedCast
+Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
+{
+    kindOfObject = object
+    id = drobots10
+}
+
+2018-01-20 23:05:03.544328 Player: error: Traceback (most recent call last):
+  File "/home/alumno/.local/lib/python3.5/site-packages/Ice/__init__.py", line 1574, in doMain
+    status = self.run(args)
+  File "./player.py", line 25, in run
+    game_prx = drobots.GamePrx.checkedCast(game_prx)
+  File "robots.ice", line 801, in checkedCast
+Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
+{
+    kindOfObject = object
+    id = drobots10
+}
+

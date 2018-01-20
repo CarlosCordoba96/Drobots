@@ -1,15 +1,17 @@
 #!/usr/bin/make -f
 # -*- mode:makefile -*-
 
-.PHONY: all dir opennodes clean
+.PHONY: all dir opennodes iceconfig clean
 NODES=$(basename $(shell ls node*.config | sort -r))
 ADMIN = icegridadmin --Ice.Config=locator.config -u user -p pass
 
 all:
 	make dir
 	make opennodes
-	make ice
-	icegridgui &
+	make iceconfig
+################################################################################
+	icegrid-gui ###############EN MI ORDENADOR VA CON EL GUIÓN PORQUE SÍ##################
+################################################################################
 
 dir:
 	mkdir -p grid
@@ -32,7 +34,8 @@ opennodes:
 	done
 
 	@echo -- ok
-ice:
+
+iceconfig:
 	$(ADMIN) -e "application add 'drobots.xml'" &
 	$(ADMIN) -e "application update 'drobots.xml'"
 	
@@ -48,3 +51,4 @@ stop-grid:
 clean:
 	make closegrid
 	sudo rm -r grid/
+        #sudo rm -r *.bz2

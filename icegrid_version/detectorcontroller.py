@@ -8,7 +8,6 @@ import Ice
 Ice.loadSlice('robots.ice --all -I .')
 import robots
 import drobots
-
 class DetectorControllerI(drobots.DetectorController):
     def __init__(self,Container):
         self.container=Container
@@ -19,10 +18,11 @@ class DetectorControllerI(drobots.DetectorController):
             robots_detected, pos.x, pos.y))
         list=self.container.getAttackers()
         print(list)
-        for i in range(0,3):
+        for i in list :
             attacker_prx = self.container.getElementAt(i)
             attacker = robots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
             attacker.enemies(pos)
+
 
 
 class DetectorControllerFactoryI(robots.DetectorControllerfactory):
