@@ -51,5 +51,6 @@ stop-grid:
 clean:
 	make stop-grid
 	sudo rm -r grid/
-	rm *.bz2
-	rm *.sum
+	rm src/*.bz2
+	rm src/*.sum
+	rm *.txt

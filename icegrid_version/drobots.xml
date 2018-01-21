@@ -145,7 +145,7 @@
                <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
-            <adapter name="FactoryAdapter" endpoints="tcp -p 9092" id="${server}.FactoryAdapter">
+            <adapter name="FactoryAdapter" endpoints="default" id="${server}.FactoryAdapter">
                <object identity="factory3" type="aux::ControllerFactory" property="factory_id"/>
             </adapter>
          </server>
