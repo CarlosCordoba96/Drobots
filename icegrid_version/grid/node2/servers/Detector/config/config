@@ -1,0 +1,14 @@
+# Configuration file (01/21/18 18:45:51.579)
+
+# Server configuration
+Ice.Admin.ServerId=Detector
+Ice.Admin.Endpoints=tcp -h localhost
+Ice.ProgramName=Detector
+# Object adapter DetectorAdapter
+DetectorAdapter.Endpoints=default
+DetectorAdapter.AdapterId=Detector.DetectorAdapter
+# Server descriptor properties
+Identity=Detector
+Ice.StdErr=/tmp/icegrid_version/grid/node2/distrib/Drobots/server-err.txt
+Ice.StdOut=/tmp/icegrid_version/grid/node2/distrib/Drobots/server-out.txt
+Ice.Default.Locator=IceGrid/Locator -t:tcp -h 127.0.0.1 -p 4061

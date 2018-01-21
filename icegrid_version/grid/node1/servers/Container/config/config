@@ -1,0 +1,14 @@
+# Configuration file (01/21/18 18:45:51.578)
+
+# Server configuration
+Ice.Admin.ServerId=Container
+Ice.Admin.Endpoints=tcp -h localhost
+Ice.ProgramName=Container
+# Object adapter ContainerAdapter
+ContainerAdapter.Endpoints=default
+ContainerAdapter.AdapterId=Container.ContainerAdapter
+# Server descriptor properties
+Identity=container
+Ice.StdErr=/tmp/icegrid_version/grid/node1/distrib/Drobots/server-err.txt
+Ice.StdOut=/tmp/icegrid_version/grid/node1/distrib/Drobots/server-out.txt
+Ice.Default.Locator=IceGrid/Locator -t:tcp -h 127.0.0.1 -p 4061

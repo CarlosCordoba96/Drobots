@@ -7,6 +7,7 @@ ADMIN = icegridadmin --Ice.Config=locator.config -u user -p pass
 
 all:
 	mv ../icegrid_version /tmp/
+	chmod u+x /tmp/icegrid_version/*
 	make dir
 	make opennodes
 	make iceconfig
