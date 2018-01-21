@@ -100,7 +100,7 @@
             </properties>
             <adapter name="ContainerAdapter" endpoints="default" id="${server}.ContainerAdapter"/>
          </server>
-         <server-instance template="IcePatch2" directory="/home/carlos/drobotsyo/icegrid_version/"/>
+         <server-instance template="IcePatch2" directory="/home/alumno/Desktop/drobots/drobotsyo/icegrid_version/src/"/>
          <server id="Player" activation="manual" exe="./player.py" pwd="${application.distrib}">
             <properties>
                <property name="GameProxy.Locator" value="IceGrid/Locator -t:tcp -h atclab.esi.uclm.es -p 4061"/>
@@ -146,7 +146,7 @@
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
             <adapter name="FactoryAdapter" endpoints="tcp -p 9092" id="${server}.FactoryAdapter">
-               <object identity="factory3" type="robots::ControllerFactory" property="factory_id"/>
+               <object identity="factory3" type="aux::ControllerFactory" property="factory_id"/>
             </adapter>
          </server>
       </node>

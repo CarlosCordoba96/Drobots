@@ -10,7 +10,7 @@ all:
 	make opennodes
 	make iceconfig
 ################################################################################
-	icegridgui &###############EN MI ORDENADOR VA CON EL GUIÓN PORQUE SÍ##################
+	icegrid-gui
 ################################################################################
 
 dir:
@@ -53,4 +53,3 @@ clean:
 	sudo rm -r grid/
 	rm *.bz2
 	rm *.sum
-        #sudo rm -r *.bz2
