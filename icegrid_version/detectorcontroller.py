@@ -32,6 +32,7 @@ class DetectorControllerFactoryI(robots.DetectorControllerfactory):
         if self.proxy is None:
             servant = DetectorControllerI(Container)
             proxy = current.adapter.addWithUUID(servant)
+            proxy = current.adapter.createDirectProxy(proxy.ice_getIdentity())
             proxy = drobots.DetectorControllerPrx.checkedCast(proxy)
             self.proxy=proxy
 
@@ -42,7 +43,7 @@ class DetectorControllerFactoryServer(Ice.Application):
         broker = self.communicator()
         servant = DetectorControllerFactoryI()
         adapter = broker.createObjectAdapter("DetectorAdapter")
-        proxy = adapter.add(servant,broker.stringToIdentity("Detector"))
+        proxy = adapter.add(servant,broker.stringToIdentity(broker.getProperties().getProperty("Identity")))
         print(proxy)
         adapter.activate()
         sys.stdout.flush()

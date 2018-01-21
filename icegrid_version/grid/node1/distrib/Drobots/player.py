@@ -1,0 +1,179 @@
+#!/usr/bin/env python3
+
+import sys
+import random
+import Ice
+
+Ice.loadSlice('robots.ice --all -I .')
+import robots
+import drobots
+#from detectorcontroller import *
+from robotcontroller import *
+
+class GameApp(Ice.Application):
+
+    def run(self, argv):
+
+        broker = self.communicator()
+
+        # Using PlayerAdapter object adapter forces to define a config file
+        # where, at least, the property "PlayerAdapter.Endpoints" is defined
+        adapter = broker.createObjectAdapter("PlayerAdapter")
+
+        # Using "propertyToProxy" forces to define the property "GameProxy"
+        game_prx = broker.propertyToProxy("GameProxy")
+        game_prx = drobots.GamePrx.checkedCast(game_prx)
+
+        # Using "getProperty" forces to define the property "PlayerName"
+        name = broker.getProperties().getProperty("PlayerName")
+
+
+
+        servant = PlayerI(broker,adapter)
+        player_prx = adapter.addWithUUID(servant)
+        player_prx = adapter.createDirectProxy(player_prx.ice_getIdentity())
+        player_prx = drobots.PlayerPrx.uncheckedCast(player_prx)
+        adapter.activate()
+
+        #proxy_game = broker.propertyToProxy('Player')
+        ##game = drobots.GamePrx.checkedCast(proxy_game)
+        #gameFact = drobots.GameFactoryPrx.checkedCast(proxy_game)
+        #game = gameFact.makeGame("GameRobots", 2)
+
+        try:
+            print("Connecting to game {} with nickname {}".format(game_prx, name))
+            game_prx.login(player_prx, name)
+
+            self.shutdownOnInterrupt()
+            self.communicator().waitForShutdown()
+
+        except drobots.GameInProgress:
+            print("\nGame already in progress in this room. Please try another room.")
+            return 1
+        except drobots.InvalidName:
+            print("\nThis player name is already taken or invalid. Please change it.")
+            return 2
+        except drobots.InvalidProxy:
+            print("\nInvalid proxy. Please try again.")
+            return 3
+        except drobots.BadNumberOfPlayers:
+            print("\nIncorrect number of players for a game. Please try another room.")
+            return 4
+
+        self.shutdownOnInterrupt()
+        broker.waitForShutdown()
+        return 0
+
+class PlayerI(drobots.Player):
+    """
+    Player interface implementation.
+    It responds correctly to makeController, win, lose or gameAbort.
+    """
+    def __init__(self,broker, adapter):
+        self.adapter = adapter
+        self.broker = broker
+        self.factory = self.createContainerFactories()
+        self.container = self.createContainerControllers()
+        self.dcontroller =self.createDetectorController()
+        self.detector_controller = None
+        self.counter = 0
+        self.mine_index = 0
+        self.mines = self.createMines()
+        self.natackers=0
+
+    def createMines(self):
+        mines=[]
+        for i in range(0,4):
+           mine=random.sample(range(0,399),2)
+           mines.append(drobots.Point(x=mine[0],y=mine[1]))
+        return mines
+
+    def createContainerFactories(self):
+        factories_list=[]
+        print( "Creating factories....")
+        for i in range(0,3):
+            string_prx = 'factory'+str(i)
+            print (string_prx)
+            factory_proxy = self.broker.stringToProxy(string_prx)
+            print ("proxy:")
+            print (factory_proxy)
+            factory = robots.ControllerFactoryPrx.uncheckedCast(factory_proxy)
+            if not factory:
+                raise RuntimeError('Invalid factory '+str(i)+' proxy')
+            factories_list.append(factory)
+        return factories_list
+
+    def createContainerControllers(self):
+        container_proxy = self.broker.stringToProxy('container1')
+        controller_container = robots.ContainerPrx.uncheckedCast(container_proxy)
+        if not controller_container:
+            raise RuntimeError('Invalid factory proxy')
+
+        return controller_container
+
+    def createDetectorController(self):
+        detector_proxy = self.broker.stringToProxy('Detector -t -e 1.1:tcp -h localhost -p 9093 -t 60000')
+        detector_factory = robots.DetectorControllerfactoryPrx.uncheckedCast(detector_proxy)
+
+        if not detector_factory:
+            raise RuntimeError('Invalid factory proxy')
+
+        return detector_factory
+
+
+    def makeController(self, bot, current):
+        i = self.counter % 3
+        print("robot en {}".format(str(i)))
+        fact_prox=self.factory[i]
+        print (fact_prox)
+        factory = robots.ControllerFactoryPrx.checkedCast(fact_prox)
+        rc = factory.make(bot, self.container, self.counter,self.mines,self.natackers)
+
+        if bot.ice_isA("::drobots::Attacker") and self.natackers<2:
+            self.natackers=self.natackers+1
+            type="a"
+        else:
+            type="d"
+        self.container.link(self.counter,rc,type)
+        self.counter += 1
+        print("se devuelve good")
+        return rc
+
+
+
+    def makeDetectorController(self, current):
+        print('DETECTOR CONTROLLERR')
+        detector_controller = self.dcontroller.make(self.container)
+
+        return detector_controller
+    def getMinePosition(self, current):
+
+        pos = self.mines[self.mine_index]
+        self.mine_index += 1
+        return pos
+
+    def win(self, current):
+
+        print("You win")
+        current.adapter.getCommunicator().shutdown()
+
+    def lose(self, current):
+
+        print("You lose :-(")
+        current.adapter.getCommunicator().shutdown()
+
+    def gameAbort(self, current):
+
+        print("The game was aborted")
+        current.adapter.getCommunicator().shutdown()
+
+    def remove_robots(self):
+        container = self.robot_container.list()
+        for robot_id in container:
+            self.robot_container.unlink(robot_id)
+
+
+if __name__ == '__main__':
+    client = GameApp()
+    retval = client.main(sys.argv)
+    sys.exit(retval)

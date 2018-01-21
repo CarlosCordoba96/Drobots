@@ -10,7 +10,7 @@ all:
 	make opennodes
 	make iceconfig
 ################################################################################
-	icegrid-gui ###############EN MI ORDENADOR VA CON EL GUIÓN PORQUE SÍ##################
+	icegridgui &###############EN MI ORDENADOR VA CON EL GUIÓN PORQUE SÍ##################
 ################################################################################
 
 dir:
@@ -49,6 +49,8 @@ stop-grid:
 	@echo -- ok
 
 clean:
-	make closegrid
+	make stop-grid
 	sudo rm -r grid/
+	rm *.bz2
+	rm *.sum
         #sudo rm -r *.bz2

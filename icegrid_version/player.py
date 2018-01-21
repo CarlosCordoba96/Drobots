@@ -29,12 +29,13 @@ class GameApp(Ice.Application):
 
 
 
-        servant = PlayerI(broker,adapter)	
+        servant = PlayerI(broker,adapter)
         player_prx = adapter.addWithUUID(servant)
+        player_prx = adapter.createDirectProxy(player_prx.ice_getIdentity())
         player_prx = drobots.PlayerPrx.uncheckedCast(player_prx)
         adapter.activate()
 
-        #proxy_game = broker.propertyToProxy('Player') 
+        #proxy_game = broker.propertyToProxy('Player')
         ##game = drobots.GamePrx.checkedCast(proxy_game)
         #gameFact = drobots.GameFactoryPrx.checkedCast(proxy_game)
         #game = gameFact.makeGame("GameRobots", 2)
@@ -66,7 +67,6 @@ class GameApp(Ice.Application):
 class PlayerI(drobots.Player):
     """
     Player interface implementation.
-
     It responds correctly to makeController, win, lose or gameAbort.
     """
     def __init__(self,broker, adapter):
@@ -92,7 +92,7 @@ class PlayerI(drobots.Player):
         factories_list=[]
         print( "Creating factories....")
         for i in range(0,3):
-            string_prx = 'printerFactory1 -t -e 1.1:tcp -h localhost -p 909'+str(i)+' -t 60000'
+            string_prx = 'factory'+str(i)
             print (string_prx)
             factory_proxy = self.broker.stringToProxy(string_prx)
             print ("proxy:")
@@ -104,13 +104,11 @@ class PlayerI(drobots.Player):
         return factories_list
 
     def createContainerControllers(self):
-        container_proxy = self.broker.stringToProxy('container -t -e 1.1:tcp -h localhost -p 9190 -t 60000')
+        container_proxy = self.broker.stringToProxy('container1')
         controller_container = robots.ContainerPrx.uncheckedCast(container_proxy)
-        controller_container.setType("ContainerController")
-
         if not controller_container:
             raise RuntimeError('Invalid factory proxy')
-        
+
         return controller_container
 
     def createDetectorController(self):
@@ -119,7 +117,7 @@ class PlayerI(drobots.Player):
 
         if not detector_factory:
             raise RuntimeError('Invalid factory proxy')
-        
+
         return detector_factory
 
 
@@ -138,15 +136,15 @@ class PlayerI(drobots.Player):
             type="d"
         self.container.link(self.counter,rc,type)
         self.counter += 1
-        print("se devuelve good")	
+        print("se devuelve good")
         return rc
 
 
-        
+
     def makeDetectorController(self, current):
         print('DETECTOR CONTROLLERR')
         detector_controller = self.dcontroller.make(self.container)
-	
+
         return detector_controller
     def getMinePosition(self, current):
 

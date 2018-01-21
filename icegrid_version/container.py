@@ -26,7 +26,7 @@ class Container(robots.Container):
      def unlink(self, key, current=None):
          print("{0}: unlink: {1}".format(self.type, key))
          del self.proxies[key]
-        
+
      def list(self,current=None):
          return self.proxies
 
@@ -36,7 +36,7 @@ class Container(robots.Container):
      def setType(self, typeC, current=None):
          self.type = typeC
          print("seteao")
-	
+
 
      def getType(self, current=None):
          return self.type
@@ -47,7 +47,7 @@ class ContainerApp (Ice.Application):
          broker = self.communicator()
          adapter = broker.createObjectAdapter('ContainerAdapter')
          servant = Container()
-         proxy = adapter.add(servant, broker.stringToIdentity("container"))
+         proxy = adapter.add(servant,broker.stringToIdentity("container1"))
          print (proxy)
          adapter.activate()
          self.shutdownOnInterrupt()

@@ -1,0 +1,14 @@
+Creating factories....
+factory0
+proxy:
+factory0 -t -e 1.1
+factory1
+proxy:
+factory1 -t -e 1.1
+factory2
+proxy:
+factory2 -t -e 1.1
+Connecting to game drobots10 -t -e 1.1 with nickname aamo12
+robot en 0
+factory0 -t -e 1.1
+The game was aborted
