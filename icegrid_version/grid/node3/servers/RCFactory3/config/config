@@ -1,4 +1,4 @@
-# Configuration file (01/21/18 02:45:31.307)
+# Configuration file (01/21/18 03:25:29.314)
 
 # Server configuration
 Ice.Admin.ServerId=RCFactory3
@@ -9,7 +9,7 @@ FactoryAdapter.Endpoints=tcp -p 9092
 FactoryAdapter.AdapterId=RCFactory3.FactoryAdapter
 # Server descriptor properties
 factory_id=factory3
-Identity=factory3
+Identity=factory2
 Ice.StdErr=/home/carlos/drobotsyo/icegrid_version/grid/node3/distrib/Drobots/server-err.txt
 Ice.StdOut=/home/carlos/drobotsyo/icegrid_version/grid/node3/distrib/Drobots/server-out.txt
 Ice.Default.Locator=IceGrid/Locator -t:tcp -h 127.0.0.1 -p 4061

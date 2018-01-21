@@ -20,3 +20,6 @@ Detector -t -e 1.1 @ Detector.DetectorAdapter
 printerFactory1 -t -e 1.1 @ RCFactory2.FactoryAdapter
 Detector -t -e 1.1 @ Detector.DetectorAdapter
 factory2 -t -e 1.1 @ RCFactory2.FactoryAdapter
+Detector -t -e 1.1 @ Detector.DetectorAdapter
+factory2 -t -e 1.1 @ RCFactory2.FactoryAdapter
+factory1 -t -e 1.1 @ RCFactory2.FactoryAdapter

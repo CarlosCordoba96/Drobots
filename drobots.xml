@@ -98,9 +98,7 @@
                <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
-            <adapter name="ContainerAdapter" endpoints="default" id="${server}.ContainerAdapter">
-               <object identity="container1"/>
-            </adapter>
+            <adapter name="ContainerAdapter" endpoints="default" id="${server}.ContainerAdapter"/>
          </server>
          <server-instance template="IcePatch2" directory="/home/carlos/drobotsyo/icegrid_version/"/>
          <server id="Player" activation="manual" exe="./player.py" pwd="${application.distrib}">
@@ -115,43 +113,40 @@
          </server>
          <server id="RCFactory1" activation="always" exe="./factory.py" pwd="${application.distrib}">
             <properties>
+               <property name="Identity" value="factory0"/>
                <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
-            <adapter name="FactoryAdapter" endpoints="default" id="${server}.FactoryAdapter">
-               <object identity="factory1" property="Identity"/>
-            </adapter>
+            <adapter name="FactoryAdapter" endpoints="default" id="${server}.FactoryAdapter"/>
          </server>
       </node>
       <node name="node2">
          <server id="Detector" activation="always" exe="./detectorcontroller.py" pwd="${application.distrib}">
             <properties>
+               <property name="Identity" value="Detector"/>
                <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
-            <adapter name="DetectorAdapter" endpoints="default" id="${server}.DetectorAdapter">
-               <object identity="Detector" property="Identity"/>
-            </adapter>
+            <adapter name="DetectorAdapter" endpoints="default" id="${server}.DetectorAdapter"/>
          </server>
          <server id="RCFactory2" activation="always" exe="./factory.py" pwd="${application.distrib}">
             <properties>
+               <property name="Identity" value="factory1"/>
                <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
-            <adapter name="FactoryAdapter" endpoints="default" id="${server}.FactoryAdapter">
-               <object identity="factory2" property="Identity"/>
-            </adapter>
+            <adapter name="FactoryAdapter" endpoints="default" id="${server}.FactoryAdapter"/>
          </server>
       </node>
       <node name="node3">
          <server id="RCFactory3" activation="always" exe="./factory.py" pwd="${application.distrib}">
             <properties>
-               <property name="Identity" value="factory3"/>
+               <property name="Identity" value="factory2"/>
                <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
             <adapter name="FactoryAdapter" endpoints="tcp -p 9092" id="${server}.FactoryAdapter">
-               <object identity="factory3" property="factory_id"/>
+               <object identity="factory3" type="robots::ControllerFactory" property="factory_id"/>
             </adapter>
          </server>
       </node>

@@ -60,10 +60,10 @@ Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
     id = drobots10
 }
 
-2018-01-21 02:46:15.133767 Player: warning: dispatch exception: src/Util.cpp:441: Ice::UnknownLocalException:
+2018-01-21 03:26:07.611067 Player: warning: dispatch exception: src/Util.cpp:441: Ice::UnknownLocalException:
 unknown local exception:
 Traceback (most recent call last):
-  File "./player.py", line 129, in makeController
+  File "./player.py", line 130, in makeController
     factory = robots.ControllerFactoryPrx.checkedCast(fact_prox)
   File "robots.ice", line 1048, in checkedCast
 Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
@@ -72,7 +72,7 @@ Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
     id = factory0
 }
 
-identity: 49B9EB19-150C-4817-A13D-20C1D472FF30
+identity: C10EAAEC-80DD-4175-B5A9-DB0CF74F8D3B
 facet: 
 operation: makeController
-remote host: ::ffff:172.20.48.102 remote port: 43395
+remote host: ::ffff:172.20.48.102 remote port: 47053
