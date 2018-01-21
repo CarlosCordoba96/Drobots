@@ -58,6 +58,7 @@ class GameApp(Ice.Application):
             print("\nIncorrect number of players for a game. Please try another room.")
             return 4
 
+        sys.stdout.flush()
         self.shutdownOnInterrupt()
         broker.waitForShutdown()
         return 0
@@ -135,6 +136,7 @@ class PlayerI(drobots.Player):
             type="d"
         self.container.link(self.counter,rc,type)
         self.counter += 1
+        sys.stdout.flush()
         print("Robot Controller SUCCESSFULLY CREATED")
         return rc
 
@@ -143,6 +145,7 @@ class PlayerI(drobots.Player):
     def makeDetectorController(self, current):
         print('Creating detector controller')
         detector_controller = self.dcontroller.make(self.container)
+        sys.stdout.flush()
 
         return detector_controller
     def getMinePosition(self, current):
