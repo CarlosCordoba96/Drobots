@@ -4,7 +4,7 @@ module robots {
 dictionary<int, Object*> ProxyDictionary;
 
      interface Container {
-         void link(int key, Object* proxy);
+         void link(int key, Object* proxy,string type);
          void unlink(int key);
          ProxyDictionary list();
          Object* getElementAt(int key);

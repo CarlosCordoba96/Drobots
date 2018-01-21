@@ -14,21 +14,18 @@ factory2 -t -e 1.1 @ RCFactory2.FactoryAdapter
 Connecting to game drobots10 -t -e 1.1 with nickname aamo12
 robot en 0
 factory0 -t -e 1.1 @ RCFactory0.FactoryAdapter
-The game was aborted
-Creating factories....
-0
-factory0 -t -e 1.1 @ RCFactory0.FactoryAdapter
-proxy:
-factory0 -t -e 1.1 @ RCFactory0.FactoryAdapter
-1
+se devuelve good
+robot en 1
 factory1 -t -e 1.1 @ RCFactory1.FactoryAdapter
-proxy:
-factory1 -t -e 1.1 @ RCFactory1.FactoryAdapter
-2
+se devuelve good
+robot en 2
 factory2 -t -e 1.1 @ RCFactory2.FactoryAdapter
-proxy:
-factory2 -t -e 1.1 @ RCFactory2.FactoryAdapter
-Connecting to game drobots10 -t -e 1.1 with nickname aamo12
+se devuelve good
 robot en 0
 factory0 -t -e 1.1 @ RCFactory0.FactoryAdapter
-The game was aborted
+se devuelve good
+DETECTOR CONTROLLERR
+DETECTOR CONTROLLERR
+DETECTOR CONTROLLERR
+DETECTOR CONTROLLERR
+You win

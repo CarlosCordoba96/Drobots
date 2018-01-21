@@ -13,7 +13,7 @@ class Container(robots.Container):
          self.deffenders=[]
 
      def link(self, key, proxy,type, current=None):
-         print("{0}: link: {1} -> {2}".format(self.type, key, proxy))
+         #print(" link: {1} -> {2}".format( key, proxy))
          self.proxies[key] = proxy
          if type == "a":
              self.attackers.append(key)

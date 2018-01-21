@@ -19,7 +19,182 @@ printerFactory1 -t -e 1.1 @ RCFactory1.FactoryAdapter
 Detector -t -e 1.1 @ Detector.DetectorAdapter
 printerFactory1 -t -e 1.1 @ RCFactory2.FactoryAdapter
 container1 -t -e 1.1 @ Container.ContainerAdapter
-factory1 -t -e 1.1 @ RCFactory1.FactoryAdapter
 factory0 -t -e 1.1 @ RCFactory0.FactoryAdapter
-1230A23C-7D71-47D6-A87E-60838D93137D -t -e 1.1 @ RCFactory0.FactoryAdapter
+D6737354-7AC3-41A8-87F1-5DC7F0CF1DEF -t -e 1.1 @ RCFactory0.FactoryAdapter
 Robot defender
+4F7D3E2D-02A8-49FD-BE1C-3DC13FEA1DEF -t -e 1.1 @ RCFactory0.FactoryAdapter
+Robot defender
+Move of 140355709166760 from location 305,167, angle 198º
+Turn of 140355709166760 at location 305,167
+Move of 140355709165640 from location 15,105, angle 357º
+Turn of 140355709165640 at location 15,105
+Move of 140355709166760 from location 305,167, angle 198º
+Turn of 140355709166760 at location 305,167
+Move of 140355709165640 from location 15,104, angle 357º
+Turn of 140355709165640 at location 15,104
+Turn of 140355709166760 at location 304,167
+Move of 140355709165640 from location 15,104, angle 357º
+Turn of 140355709165640 at location 15,104
+Found 0 enemies in 214  direction.
+Turn of 140355709166760 at location 303,167
+Move of 140355709165640 from location 16,104, angle 357º
+Turn of 140355709165640 at location 16,104
+Found 0 enemies in 218  direction.
+Turn of 140355709166760 at location 302,167
+Move of 140355709165640 from location 16,105, angle 357º
+Turn of 140355709165640 at location 16,105
+Found 0 enemies in 273  direction.
+Turn of 140355709166760 at location 301,166
+Move of 140355709165640 from location 16,105, angle 357º
+Turn of 140355709165640 at location 16,105
+Found 0 enemies in 116  direction.
+Turn of 140355709166760 at location 300,166
+Move of 140355709165640 from location 17,105, angle 357º
+Turn of 140355709165640 at location 17,105
+Found 1 enemies in 189  direction.
+Turn of 140355709166760 at location 299,166
+Move of 140355709165640 from location 17,106, angle 356º
+Turn of 140355709165640 at location 17,106
+Found 1 enemies in 149  direction.
+Turn of 140355709166760 at location 298,165
+Move of 140355709165640 from location 17,106, angle 356º
+Turn of 140355709165640 at location 17,106
+Found 0 enemies in 329  direction.
+Turn of 140355709166760 at location 297,165
+Move of 140355709165640 from location 18,106, angle 356º
+Turn of 140355709165640 at location 18,106
+Found 2 enemies in 82  direction.
+Turn of 140355709166760 at location 296,165
+Move of 140355709165640 from location 18,107, angle 355º
+Turn of 140355709165640 at location 18,107
+Found 0 enemies in 98  direction.
+Turn of 140355709166760 at location 295,164
+Move of 140355709165640 from location 19,107, angle 355º
+Turn of 140355709165640 at location 19,107
+Found 2 enemies in 170  direction.
+Turn of 140355709166760 at location 294,164
+Move of 140355709165640 from location 19,108, angle 354º
+Turn of 140355709165640 at location 19,108
+Found 0 enemies in 225  direction.
+Turn of 140355709166760 at location 293,164
+Move of 140355709165640 from location 19,108, angle 354º
+Turn of 140355709165640 at location 19,108
+Found 0 enemies in 305  direction.
+Turn of 140355709166760 at location 292,163
+Move of 140355709165640 from location 20,108, angle 354º
+Turn of 140355709165640 at location 20,108
+Found 0 enemies in 230  direction.
+Turn of 140355709166760 at location 292,163
+Move of 140355709165640 from location 20,109, angle 354º
+Turn of 140355709165640 at location 20,109
+Found 1 enemies in 197  direction.
+Turn of 140355709166760 at location 291,163
+Move of 140355709165640 from location 20,109, angle 354º
+Turn of 140355709165640 at location 20,109
+Found 1 enemies in 195  direction.
+Turn of 140355709166760 at location 290,162
+Move of 140355709165640 from location 21,109, angle 354º
+Turn of 140355709165640 at location 21,109
+Found 0 enemies in 248  direction.
+Turn of 140355709166760 at location 289,162
+Move of 140355709165640 from location 21,110, angle 353º
+Turn of 140355709165640 at location 21,110
+Found 0 enemies in 231  direction.
+Turn of 140355709166760 at location 288,162
+Move of 140355709165640 from location 21,110, angle 353º
+Turn of 140355709165640 at location 21,110
+Found 0 enemies in 24  direction.
+Turn of 140355709166760 at location 287,162
+Move of 140355709165640 from location 22,110, angle 353º
+Turn of 140355709165640 at location 22,110
+Found 0 enemies in 94  direction.
+Turn of 140355709166760 at location 286,161
+Move of 140355709165640 from location 22,111, angle 352º
+Turn of 140355709165640 at location 22,111
+Found 0 enemies in 317  direction.
+Turn of 140355709166760 at location 285,161
+Move of 140355709165640 from location 22,111, angle 352º
+Turn of 140355709165640 at location 22,111
+Found 0 enemies in 334  direction.
+Turn of 140355709166760 at location 284,161
+Move of 140355709165640 from location 23,111, angle 352º
+Turn of 140355709165640 at location 23,111
+Found 0 enemies in 12  direction.
+Turn of 140355709166760 at location 283,160
+Move of 140355709165640 from location 23,112, angle 351º
+Turn of 140355709165640 at location 23,112
+Found 0 enemies in 101  direction.
+Turn of 140355709166760 at location 282,160
+Move of 140355709165640 from location 23,112, angle 351º
+Turn of 140355709165640 at location 23,112
+Found 1 enemies in 54  direction.
+Turn of 140355709166760 at location 281,160
+Move of 140355709165640 from location 24,112, angle 351º
+Turn of 140355709165640 at location 24,112
+Defender was destroyed
+Move of 140355709165640 from location 24,113, angle 350º
+Turn of 140355709165640 at location 24,113
+Defender was destroyed
+Move of 140355709165640 from location 25,113, angle 350º
+Turn of 140355709165640 at location 25,113
+Defender was destroyed
+Move of 140355709165640 from location 25,114, angle 349º
+Turn of 140355709165640 at location 25,114
+Defender was destroyed
+Move of 140355709165640 from location 26,115, angle 349º
+Turn of 140355709165640 at location 26,115
+Defender was destroyed
+Move of 140355709165640 from location 27,115, angle 348º
+Turn of 140355709165640 at location 27,115
+Defender was destroyed
+Move of 140355709165640 from location 27,116, angle 348º
+Turn of 140355709165640 at location 27,116
+Defender was destroyed
+Move of 140355709165640 from location 28,117, angle 347º
+Turn of 140355709165640 at location 28,117
+Defender was destroyed
+Move of 140355709165640 from location 29,117, angle 347º
+Turn of 140355709165640 at location 29,117
+Defender was destroyed
+Move of 140355709165640 from location 29,118, angle 346º
+Turn of 140355709165640 at location 29,118
+Defender was destroyed
+Move of 140355709165640 from location 30,119, angle 345º
+Turn of 140355709165640 at location 30,119
+Defender was destroyed
+Move of 140355709165640 from location 31,120, angle 344º
+Turn of 140355709165640 at location 31,120
+Defender was destroyed
+Move of 140355709165640 from location 32,120, angle 344º
+Turn of 140355709165640 at location 32,120
+Defender was destroyed
+Move of 140355709165640 from location 32,121, angle 343º
+Turn of 140355709165640 at location 32,121
+Defender was destroyed
+Move of 140355709165640 from location 33,122, angle 342º
+Turn of 140355709165640 at location 33,122
+Defender was destroyed
+Move of 140355709165640 from location 34,123, angle 341º
+Turn of 140355709165640 at location 34,123
+Defender was destroyed
+Move of 140355709165640 from location 35,124, angle 340º
+Turn of 140355709165640 at location 35,124
+Defender was destroyed
+Move of 140355709165640 from location 36,125, angle 339º
+Turn of 140355709165640 at location 36,125
+Defender was destroyed
+Move of 140355709165640 from location 37,126, angle 338º
+Turn of 140355709165640 at location 37,126
+Defender was destroyed
+Move of 140355709165640 from location 38,126, angle 337º
+Turn of 140355709165640 at location 38,126
+Defender was destroyed
+Move of 140355709165640 from location 38,127, angle 336º
+Turn of 140355709165640 at location 38,127
+Defender was destroyed
+Move of 140355709165640 from location 39,128, angle 335º
+Turn of 140355709165640 at location 39,128
+Defender was destroyed
+Move of 140355709165640 from location 40,129, angle 334º
+Turn of 140355709165640 at location 40,129
+Defender was destroyed

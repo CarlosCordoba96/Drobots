@@ -111,9 +111,9 @@
             </properties>
             <adapter name="PlayerAdapter" endpoints="default" id="${server}.PlayerAdapter"/>
          </server>
-         <server id="RCFactory1" activation="always" exe="./factory.py" pwd="${application.distrib}">
+         <server id="RCFactory0" activation="always" exe="./factory.py" pwd="${application.distrib}">
             <properties>
-               <property name="Identity" value="factory1"/>
+               <property name="Identity" value="factory0"/>
                <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
@@ -129,9 +129,9 @@
             </properties>
             <adapter name="DetectorAdapter" endpoints="default" id="${server}.DetectorAdapter"/>
          </server>
-         <server id="RCFactory2" activation="always" exe="./factory.py" pwd="${application.distrib}">
+         <server id="RCFactory1" activation="always" exe="./factory.py" pwd="${application.distrib}">
             <properties>
-               <property name="Identity" value="factory2"/>
+               <property name="Identity" value="factory1"/>
                <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
@@ -139,9 +139,9 @@
          </server>
       </node>
       <node name="node3">
-         <server id="RCFactory3" activation="always" exe="./factory.py" pwd="${application.distrib}">
+         <server id="RCFactory2" activation="always" exe="./factory.py" pwd="${application.distrib}">
             <properties>
-               <property name="Identity" value="factory3"/>
+               <property name="Identity" value="factory2"/>
                <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
                <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
             </properties>
