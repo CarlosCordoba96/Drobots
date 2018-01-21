@@ -1,4 +1,0 @@
-!! 01/21/18 18:45:51.630 Drobots.IcePatch2: error: cannot open `/tmp/icegrid_version/src/IcePatch2.sum' for reading:
-   No such file or directory
-!! 01/21/18 18:45:51.643 Drobots.IcePatch2: error: cannot open `/tmp/icegrid_version/src/IcePatch2.sum' for reading:
-   No such file or directory
