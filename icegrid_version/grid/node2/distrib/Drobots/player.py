@@ -93,7 +93,7 @@ class PlayerI(drobots.Player):
         print( "Creating factories....")
         for i in range(0,3):
             print(i)
-            string_prx = 'factory'+str(i)
+            string_prx ='factory'+str(i)+' -t -e 1.1 @ RCFactory'+str(i)+'.FactoryAdapter'
             print (string_prx)
             factory_proxy = self.broker.stringToProxy(string_prx)
             print ("proxy:")

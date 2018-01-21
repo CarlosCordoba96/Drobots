@@ -20,6 +20,6 @@ Detector -t -e 1.1 @ Detector.DetectorAdapter
 printerFactory1 -t -e 1.1 @ RCFactory2.FactoryAdapter
 container1 -t -e 1.1 @ Container.ContainerAdapter
 factory1 -t -e 1.1 @ RCFactory1.FactoryAdapter
-container1 -t -e 1.1 @ Container.ContainerAdapter
-factory1 -t -e 1.1 @ RCFactory1.FactoryAdapter
-factory0 -t -e 1.1 @ RCFactory1.FactoryAdapter
+factory0 -t -e 1.1 @ RCFactory0.FactoryAdapter
+1230A23C-7D71-47D6-A87E-60838D93137D -t -e 1.1 @ RCFactory0.FactoryAdapter
+Robot defender

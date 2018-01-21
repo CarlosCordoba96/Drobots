@@ -60,7 +60,7 @@ Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
     id = drobots10
 }
 
-2018-01-21 03:26:07.611067 Player: warning: dispatch exception: src/Util.cpp:441: Ice::UnknownLocalException:
+2018-01-21 04:01:42.163842 Player: warning: dispatch exception: src/Util.cpp:441: Ice::UnknownLocalException:
 unknown local exception:
 Traceback (most recent call last):
   File "./player.py", line 130, in makeController
@@ -68,11 +68,23 @@ Traceback (most recent call last):
   File "robots.ice", line 1048, in checkedCast
 Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
 {
-    kindOfObject = object
-    id = factory0
+    kindOfObject = object adapter
+    id = RCFactory0.FactoryAdapter
 }
 
-identity: C10EAAEC-80DD-4175-B5A9-DB0CF74F8D3B
+identity: 502C9A23-AAF3-4840-812C-6DE2E5AA1351
 facet: 
 operation: makeController
-remote host: ::ffff:172.20.48.102 remote port: 47053
+remote host: ::ffff:172.20.48.102 remote port: 58182
+2018-01-21 04:03:29.891662 Player: warning: dispatch exception: src/Util.cpp:333: Ice::UnknownException:
+unknown exception:
+Traceback (most recent call last):
+  File "./player.py", line 138, in makeController
+    self.container.link(self.counter,rc,type)
+  File "robots.ice", line 924, in link
+ValueError: context argument must be None or a dictionary
+
+identity: 07BCDB79-91D3-4E81-A0BD-45BB12AE9397
+facet: 
+operation: makeController
+remote host: ::ffff:172.20.48.102 remote port: 53046
