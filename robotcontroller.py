@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+#/------------------------------------------------------------------------/
+
+#	Authors: Carlos Córdoba Ruiz & Álvaro Ángel-Moreno Pinilla
+
+#/------------------------------------------------------------------------/
 
 import sys
 import Ice
@@ -21,7 +26,6 @@ class ControllerDefenderI(robots.RobotControllerDefender):
         self.mines = mines
 
         self.vel = 0
-        #self.energia = 0
         self.x = 100
         self.y = 100
         self.angle = 0
@@ -35,8 +39,6 @@ class ControllerDefenderI(robots.RobotControllerDefender):
     def allies(self, point, id_bot, current=None):
         self.allies_pos[id_bot]= point
 
-
-
     def turn(self, current):
         try:
             self.handlers[self.state]()
@@ -45,9 +47,15 @@ class ControllerDefenderI(robots.RobotControllerDefender):
         location = self.bot.location()
         print("Turn of {} at location {},{}".format(id(self), location.x, location.y))
 
+	#PLAYING
+
     def play(self):
         my_location = self.bot.location()
 
+        for i in range(0,3):
+            defender_prx = self.container.getElementAt(i)
+            defender = robots.RobotControllerDefenderPrx.uncheckedCast(defender_prx)
+            defender.allies(my_location, i)
         for i in range(0,3):
             attacker_prx = self.container.getElementAt(i)
             attacker = robots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
@@ -85,7 +93,7 @@ class ControllerDefenderI(robots.RobotControllerDefender):
              print("Move of {} from location {},{}, angle {}º".format(id(self), location.x, location.y,direction))
              self.bot.drive(direction,100)
              self.vel = 100
-        self.state = State.PLAYING
+        self.state = State.SCANNING
 
     def avoidCollision(self, direction, vel):
         avoid = True
@@ -182,6 +190,8 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
         location = self.bot.location()
         print("Turn of {} at location {},{}".format(id(self), location.x, location.y))
 
+    #PLAYING
+
     def play(self):
         my_location = self.bot.location()
 
@@ -189,7 +199,11 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
             defender_prx = self.container.getElementAt(i)
             defender = robots.RobotControllerDefenderPrx.uncheckedCast(defender_prx)
             defender.allies(my_location, i)
-            self.state = State.SHOOTING
+        for i in range(0,3):
+            attacker_prx = self.container.getElementAt(i)
+            attacker = robots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
+            attacker.allies(my_location, i)
+        self.state = State.SHOOTING
 
 
     #MOVING
@@ -216,14 +230,13 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
         elif (location.y < 50):
              self.bot.drive(135, 50) #100
              self.vel = 100
-        #El bloque if/elif de arriba podria sobrar en ambos
 
         if (self.avoidCollision(direction,self.vel)==True):
              #Si la velocidad no es 0, se mueve con la definida.
              print("Move of {} from location {},{}, angle {}º".format(id(self), location.x, location.y,direction))
              self.bot.drive(direction,100)
              self.vel = 100
-        self.state = State.PLAYING
+        self.state = State.SHOOTING
 
     def avoidCollision(self, direction, vel):
         avoid = True
@@ -287,17 +300,15 @@ class ControllerAttackerI(robots.RobotControllerAttacker):
         new_x = (distance * math.sin(angle)) + location.x
         new_y = (distance * math.cos(angle)) + location.y
         #Setting the square where the explossion reaches
-        min_x = new_x - 50
-        min_y = new_y - 50
-        max_x = new_x + 50
-        max_y = new_y + 50
+        min_x = new_x - 80
+        min_y = new_y - 80
+        max_x = new_x + 80
+        max_y = new_y + 80
         for key, value in self.allies_pos.items():
             if (self.allies_pos[key].x > min_x and self.allies_pos[key].y > min_y and self.allies_pos[key].x < max_x and self.allies_pos[key].y < max_y):
                 print("Attacker robot avoided shooting his ally {}.".format(key))
                 avoided = False
         return avoided
-
-    #def (SEARCH & REGISTER FOR DEFF ALLIES) NO SE PUEDE HACER TAL CUAL PORQUE DEVUELVE NUMERO EN UN ANGULO, NO POSICIONES
 
     def robotDestroyed(self, current):
 

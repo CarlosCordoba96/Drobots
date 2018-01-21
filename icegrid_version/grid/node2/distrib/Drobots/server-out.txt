@@ -1,5 +1,0 @@
-Detector -t -e 1.1 @ Detector.DetectorAdapter
-factory1 -t -e 1.1 @ RCFactory1.FactoryAdapter
-Detector -t -e 1.1 @ Detector.DetectorAdapter
-factory1 -t -e 1.1 @ RCFactory1.FactoryAdapter
-Detector -t -e 1.1 @ Detector.DetectorAdapter

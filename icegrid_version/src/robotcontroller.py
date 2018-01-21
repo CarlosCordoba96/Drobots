@@ -53,8 +53,12 @@ class ControllerDefenderI(aux.RobotControllerDefender):
         my_location = self.bot.location()
 
         for i in range(0,3):
+            defender_prx = self.container.getElementAt(i)
+            defender = robots.RobotControllerDefenderPrx.uncheckedCast(defender_prx)
+            defender.allies(my_location, i)
+        for i in range(0,3):
             attacker_prx = self.container.getElementAt(i)
-            attacker = aux.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
+            attacker = robots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
             attacker.allies(my_location, i)
         self.state = State.SCANNING
 
@@ -89,7 +93,7 @@ class ControllerDefenderI(aux.RobotControllerDefender):
              print("Move of {} from location {},{}, angle {}º".format(id(self), location.x, location.y,direction))
              self.bot.drive(direction,100)
              self.vel = 100
-        self.state = State.PLAYING
+        self.state = State.SCANNING
 
     def avoidCollision(self, direction, vel):
         avoid = True
@@ -193,9 +197,13 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
 
         for i in range(0,3):
             defender_prx = self.container.getElementAt(i)
-            defender = aux.RobotControllerDefenderPrx.uncheckedCast(defender_prx)
+            defender = robots.RobotControllerDefenderPrx.uncheckedCast(defender_prx)
             defender.allies(my_location, i)
-            self.state = State.SHOOTING
+        for i in range(0,3):
+            attacker_prx = self.container.getElementAt(i)
+            attacker = robots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
+            attacker.allies(my_location, i)
+	self.state = State.SHOOTING
 
 
     #MOVING
@@ -228,7 +236,7 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
              print("Move of {} from location {},{}, angle {}º".format(id(self), location.x, location.y,direction))
              self.bot.drive(direction,100)
              self.vel = 100
-        self.state = State.PLAYING
+        self.state = State.SHOOTING
 
     def avoidCollision(self, direction, vel):
         avoid = True
@@ -292,10 +300,10 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
         new_x = (distance * math.sin(angle)) + location.x
         new_y = (distance * math.cos(angle)) + location.y
         #Setting the square where the explossion reaches
-        min_x = new_x - 50
-        min_y = new_y - 50
-        max_x = new_x + 50
-        max_y = new_y + 50
+        min_x = new_x - 80
+        min_y = new_y - 80
+        max_x = new_x + 80
+        max_y = new_y + 80
         for key, value in self.allies_pos.items():
             if (self.allies_pos[key].x > min_x and self.allies_pos[key].y > min_y and self.allies_pos[key].x < max_x and self.allies_pos[key].y < max_y):
                 print("Attacker robot avoided shooting his ally {}.".format(key))

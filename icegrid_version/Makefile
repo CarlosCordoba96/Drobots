@@ -1,17 +1,16 @@
 #!/usr/bin/make -f
 # -*- mode:makefile -*-
 
-.PHONY: all dir opennodes iceconfig clean
+.PHONY: all dir opennodes iceconfig icepatch stop-grid clean
 NODES=$(basename $(shell ls node*.config | sort -r))
 ADMIN = icegridadmin --Ice.Config=locator.config -u user -p pass
 
 all:
+	mv ../icegrid_version /tmp/
 	make dir
 	make opennodes
 	make iceconfig
-################################################################################
 	icegridgui &
-################################################################################
 
 dir:
 	mkdir -p grid
@@ -37,10 +36,10 @@ opennodes:
 
 iceconfig:
 	$(ADMIN) -e "application add 'drobots.xml'" &
-
 	
 icepatch:
 	icepatch2calc src/
+
 stop-grid:
 	@for node in $(NODES); do \
 	    $(ADMIN) -e "node shutdown $$node"; \
