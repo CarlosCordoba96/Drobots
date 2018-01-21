@@ -1,0 +1,16 @@
+2018-01-21 15:51:01.318330 Player: warning: dispatch exception: src/Util.cpp:441: Ice::UnknownLocalException:
+unknown local exception:
+Traceback (most recent call last):
+  File "./player.py", line 136, in makeController
+    self.container.link(self.counter,rc,type)
+  File "aux.ice", line 924, in link
+Ice.NotRegisteredException: exception ::Ice::NotRegisteredException
+{
+    kindOfObject = object
+    id = container1
+}
+
+identity: A844B7FB-242A-498F-8454-54352709277D
+facet: 
+operation: makeController
+remote host: ::ffff:172.20.48.102 remote port: 39760

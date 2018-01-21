@@ -91,7 +91,7 @@ class PlayerI(drobots.Player):
         print( "Creating factories....")
         for i in range(0,3):
             print(i)
-            string_prx ='factory'+str(i)+' -t -e 1.1 @ RCFactory'+str(i)+'.FactoryAdapter'
+            string_prx ='factory'+str(i)#+' -t -e 1.1 @ RCFactory'+str(i)+'.FactoryAdapter'
             print (string_prx)
             factory_proxy = self.broker.stringToProxy(string_prx)
             print ("proxy:")
@@ -103,7 +103,7 @@ class PlayerI(drobots.Player):
         return factories_list
 
     def createContainerControllers(self):
-        container_proxy = self.broker.stringToProxy('container1 -t -e 1.1 @ Container.ContainerAdapter')
+        container_proxy = self.broker.stringToProxy('container1')# -t -e 1.1 @ Container.ContainerAdapter')
         controller_container = aux.ContainerPrx.uncheckedCast(container_proxy)
         if not controller_container:
             raise RuntimeError('Invalid factory proxy')
@@ -111,7 +111,7 @@ class PlayerI(drobots.Player):
         return controller_container
 
     def createDetectorController(self):
-        detector_proxy = self.broker.stringToProxy('Detector -t -e 1.1 @ Detector.DetectorAdapter')
+        detector_proxy = self.broker.stringToProxy('Detector')# -t -e 1.1 @ Detector.DetectorAdapter')
         detector_factory = aux.DetectorControllerfactoryPrx.uncheckedCast(detector_proxy)
 
         if not detector_factory:

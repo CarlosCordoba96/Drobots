@@ -1,0 +1,2 @@
+factory2 -t -e 1.1 @ RCFactory2.FactoryAdapter
+factory2 -t -e 1.1 @ RCFactory2.FactoryAdapter

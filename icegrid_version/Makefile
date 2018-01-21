@@ -10,7 +10,7 @@ all:
 	make opennodes
 	make iceconfig
 ################################################################################
-	icegrid-gui
+	icegridgui &
 ################################################################################
 
 dir:
@@ -37,8 +37,10 @@ opennodes:
 
 iceconfig:
 	$(ADMIN) -e "application add 'drobots.xml'" &
-	$(ADMIN) -e "application update 'drobots.xml'"
+
 	
+icepatch:
+	icepatch2calc src/
 stop-grid:
 	@for node in $(NODES); do \
 	    $(ADMIN) -e "node shutdown $$node"; \

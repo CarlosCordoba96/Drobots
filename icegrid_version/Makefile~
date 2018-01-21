@@ -10,7 +10,7 @@ all:
 	make opennodes
 	make iceconfig
 ################################################################################
-	icegrid-gui ###############EN MI ORDENADOR VA CON EL GUIÓN PORQUE SÍ##################
+	#icegridgui &
 ################################################################################
 
 dir:
@@ -37,8 +37,10 @@ opennodes:
 
 iceconfig:
 	$(ADMIN) -e "application add 'drobots.xml'" &
-	$(ADMIN) -e "application update 'drobots.xml'"
+
 	
+icepatch:
+	icepatch2calc src/
 stop-grid:
 	@for node in $(NODES); do \
 	    $(ADMIN) -e "node shutdown $$node"; \
@@ -49,6 +51,8 @@ stop-grid:
 	@echo -- ok
 
 clean:
-	make closegrid
+	make stop-grid
 	sudo rm -r grid/
-        #sudo rm -r *.bz2
+	rm src/*.bz2
+	rm src/*.sum
+	rm *.txt
