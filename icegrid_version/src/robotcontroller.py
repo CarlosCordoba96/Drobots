@@ -203,7 +203,7 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
             attacker_prx = self.container.getElementAt(i)
             attacker = robots.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
             attacker.allies(my_location, i)
-	self.state = State.SHOOTING
+        self.state = State.SHOOTING
 
 
     #MOVING

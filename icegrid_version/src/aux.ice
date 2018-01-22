@@ -7,6 +7,7 @@
 
 module aux {
 dictionary<int, Object*> ProxyDictionary;
+sequence <int> attackerslist;
 
      interface Container {
          void link(int key, Object* proxy,string type);
@@ -14,9 +15,10 @@ dictionary<int, Object*> ProxyDictionary;
          ProxyDictionary list();
          Object* getElementAt(int key);
          void setType(string type);
+         attackerslist getAttackers();
          string getType();
      };
-      sequence <drobots::Point> mines;
+     sequence <drobots::Point> mines;
 
      interface ControllerFactory {
          drobots::RobotController* make(drobots::Robot* bot, Container* container, int key, mines minas,int nattackers);

@@ -40,6 +40,7 @@ class GameApp(Ice.Application):
 
         try:
             print("Connecting to game {} with nickname {}".format(game_prx, name))
+            sys.stdout.flush()
             game_prx.login(player_prx, name)
 
             self.shutdownOnInterrupt()
@@ -92,7 +93,7 @@ class PlayerI(drobots.Player):
         print( "Creating factories....")
         for i in range(0,3):
             print(i)
-            string_prx ='factory'+str(i)#+' -t -e 1.1 @ RCFactory'+str(i)+'.FactoryAdapter'
+            string_prx ='factory'+str(i)+' -t -e 1.1 @ RCFactory'+str(i)+'.FactoryAdapter'
             print (string_prx)
             factory_proxy = self.broker.stringToProxy(string_prx)
             print ("proxy:")
@@ -101,10 +102,11 @@ class PlayerI(drobots.Player):
             if not factory:
                 raise RuntimeError('Invalid factory '+str(i)+' proxy')
             factories_list.append(factory)
+            sys.stdout.flush()
         return factories_list
 
     def createContainerControllers(self):
-        container_proxy = self.broker.stringToProxy('container1')# -t -e 1.1 @ Container.ContainerAdapter')
+        container_proxy = self.broker.stringToProxy('container1 -t -e 1.1 @ Container.ContainerAdapter')
         controller_container = aux.ContainerPrx.uncheckedCast(container_proxy)
         if not controller_container:
             raise RuntimeError('Invalid factory proxy')
@@ -112,7 +114,7 @@ class PlayerI(drobots.Player):
         return controller_container
 
     def createDetectorController(self):
-        detector_proxy = self.broker.stringToProxy('Detector')# -t -e 1.1 @ Detector.DetectorAdapter')
+        detector_proxy = self.broker.stringToProxy('Detector -t -e 1.1 @ Detector.DetectorAdapter')
         detector_factory = aux.DetectorControllerfactoryPrx.uncheckedCast(detector_proxy)
 
         if not detector_factory:
@@ -136,8 +138,8 @@ class PlayerI(drobots.Player):
             type="d"
         self.container.link(self.counter,rc,type)
         self.counter += 1
-        sys.stdout.flush()
         print("Robot Controller SUCCESSFULLY CREATED")
+        sys.stdout.flush()
         return rc
 
 

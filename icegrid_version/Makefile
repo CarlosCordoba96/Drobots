@@ -6,19 +6,21 @@ NODES=$(basename $(shell ls node*.config | sort -r))
 ADMIN = icegridadmin --Ice.Config=locator.config -u user -p pass
 
 all:
-	mv ../icegrid_version /tmp/
+	cp -R ../icegrid_version /tmp/
 	chmod u+x /tmp/icegrid_version/*
 	make dir
 	make opennodes
+	make icepatch
+	cd /tmp/icegrid_version/
 	make iceconfig
 	icegridgui &
 
 dir:
-	mkdir -p grid
-	mkdir -p grid/registry
-	mkdir -p grid/node1
-	mkdir -p grid/node2
-	mkdir -p grid/node3
+	mkdir -p /tmp/icegrid_version/grid
+	mkdir -p /tmp/icegrid_version/grid/registry
+	mkdir -p /tmp/icegrid_version/grid/node1
+	mkdir -p /tmp/icegrid_version/grid/node2
+	mkdir -p /tmp/icegrid_version/grid/node3
 
 opennodes:
 	icegridnode --Ice.Config=node1.config &
@@ -39,7 +41,7 @@ iceconfig:
 	$(ADMIN) -e "application add 'drobots.xml'" &
 	
 icepatch:
-	icepatch2calc src/
+	icepatch2calc /tmp/icegrid_version/src/
 
 stop-grid:
 	@for node in $(NODES); do \
@@ -52,7 +54,7 @@ stop-grid:
 
 clean:
 	make stop-grid
-	sudo rm -r grid/
-	rm src/*.bz2
-	rm src/*.sum
+	sudo rm -r /tmp/icegrid_version/grid/
+	rm /tmp/icegrid_version/src/*.bz2
+	rm /tmp/icegrid_version/src/*.sum
 	rm *.txt

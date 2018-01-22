@@ -52,7 +52,7 @@ class ContainerApp (Ice.Application):
          broker = self.communicator()
          adapter = broker.createObjectAdapter('ContainerAdapter')
          servant = Container()
-         proxy = adapter.add(servant,broker.stringToIdentity("container"))
+         proxy = adapter.add(servant,broker.stringToIdentity("container1"))
          print (proxy)
          adapter.activate()
          self.shutdownOnInterrupt()
