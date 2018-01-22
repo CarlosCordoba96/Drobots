@@ -57,4 +57,3 @@ clean:
 	sudo rm -r /tmp/icegrid_version/grid/
 	rm /tmp/icegrid_version/src/*.bz2
 	rm /tmp/icegrid_version/src/*.sum
-	rm *.txt
