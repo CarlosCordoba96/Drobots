@@ -15,7 +15,7 @@ class Container(aux.Container):
      def __init__(self, current=None):
          self.proxies = dict()
          self.attackers=[]
-         self.deffenders=[]
+         self.defenders=[]
 
      def link(self, key, proxy,type, current=None):
          #print(" link: {1} -> {2}".format( key, proxy))
@@ -23,10 +23,13 @@ class Container(aux.Container):
          if type == "a":
              self.attackers.append(key)
          else:
-             self.deffenders.append(key)
+             self.defenders.append(key)
 
      def getAttackers(self,current=None):
          return self.attackers
+
+     def getDefenders(self,current=None):
+         return self.defenders
 
      def unlink(self, key, current=None):
          print("{0}: unlink: {1}".format(self.type, key))

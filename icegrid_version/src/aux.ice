@@ -8,6 +8,7 @@
 module aux {
 dictionary<int, Object*> ProxyDictionary;
 sequence <int> attackerslist;
+sequence <int> defenderslist;
 
      interface Container {
          void link(int key, Object* proxy,string type);
@@ -16,6 +17,7 @@ sequence <int> attackerslist;
          Object* getElementAt(int key);
          void setType(string type);
          attackerslist getAttackers();
+         defenderslist getDefenders();
          string getType();
      };
      sequence <drobots::Point> mines;
