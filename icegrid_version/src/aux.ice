@@ -15,7 +15,7 @@ sequence <int> defenderslist;
          void unlink(int key);
          ProxyDictionary list();
          Object* getElementAt(int key);
-         void setType(string type);
+
          attackerslist getAttackers();
          defenderslist getDefenders();
          string getType();

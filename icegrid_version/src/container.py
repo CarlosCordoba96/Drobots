@@ -18,7 +18,6 @@ class Container(aux.Container):
          self.defenders=[]
 
      def link(self, key, proxy,type, current=None):
-         #print(" link: {1} -> {2}".format( key, proxy))
          self.proxies[key] = proxy
          if type == "a":
              self.attackers.append(key)
@@ -40,11 +39,6 @@ class Container(aux.Container):
 
      def getElementAt(self, key, current=None):
          return self.proxies[key]
-
-     def setType(self, typeC, current=None):
-         self.type = typeC
-         print("Container type was setted")
-
 
      def getType(self, current=None):
          return self.type
