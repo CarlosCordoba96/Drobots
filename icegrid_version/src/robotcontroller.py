@@ -28,6 +28,7 @@ class ControllerDefenderI(aux.RobotControllerDefender):
         self.vel = 0
         self.x = 100
         self.y = 100
+        self.nscans = 0
         self.angle = 0
         self.allies_pos = dict()
         self.handlers = {
@@ -57,17 +58,19 @@ class ControllerDefenderI(aux.RobotControllerDefender):
         for i in self.container.getDefenders():
             defender_prx = self.container.getElementAt(i)
             defender = aux.RobotControllerDefenderPrx.uncheckedCast(defender_prx)
-            defender.allies(my_location, i)
+            defender.allies(my_location, self.key)
         for i in self.container.getAttackers():
             attacker_prx = self.container.getElementAt(i)
             attacker = aux.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
-            attacker.allies(my_location, i)
+            attacker.allies(my_location, self.key)
         self.state = State.SCANNING
 
 
     #MOVING
 
     def move(self):
+        self.x = random.randint(0,400)
+        self.y = random.randint(0,400)
         location = self.bot.location()
         new_x = self.x - location.x
         new_y = self.y - location.y
@@ -110,7 +113,7 @@ class ControllerDefenderI(aux.RobotControllerDefender):
                   if (new_x == self.allies_pos[key].x and new_y == self.allies_pos[key].y):
                        print("Not moving to avoid colliding an ally")
                        return False
-        return True
+        return avoid
 
     def recalculate_angle(self, x, y, current=None):
         if x == 0:
@@ -131,18 +134,18 @@ class ControllerDefenderI(aux.RobotControllerDefender):
     #SCANNING
 
     def scan(self):
-        try:
-            angle = random.randint(0, 360)
-        except IndexError:
-            self.angles_left_to_scan = self.Allangles[:]
-            random.shuffle(self.angles_left_to_scan)
-            current_angle = self.angles_left_to_scan.pop()
-        try:
-            enemies = self.bot.scan(angle, 20)
-            print("Found {} enemies in {}  direction.".format(enemies, angle))
-        except drobots.NoEnoughEnergy:
+        if (self.nscans == 5):
+            self.nscans = 0
             self.state = State.MOVING
-            pass
+        else:
+            angle = random.randint(0, 360)
+            try:
+                enemies = self.bot.scan(angle, 20)
+                print("Found {} enemies in {}  direction.".format(enemies, angle))
+                self.nscans += 1
+            except drobots.NoEnoughEnergy:
+                self.state = State.MOVING
+                pass
 
     def robotDestroyed(self, current):
 
@@ -163,6 +166,7 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
         self.vel = 0
         self.x = 100
         self.y = 100
+        self.nshoots = 0
         self.angle = 0
         self.allies_pos = dict()
         self.enemies_pos = []
@@ -200,17 +204,19 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
         for i in self.container.getDefenders():
             defender_prx = self.container.getElementAt(i)
             defender = aux.RobotControllerDefenderPrx.uncheckedCast(defender_prx)
-            defender.allies(my_location, i)
+            defender.allies(my_location, self.key)
         for i in self.container.getAttackers():
             attacker_prx = self.container.getElementAt(i)
             attacker = aux.RobotControllerAttackerPrx.uncheckedCast(attacker_prx)
-            attacker.allies(my_location, i)
+            attacker.allies(my_location, self.key)
         self.state = State.SHOOTING
 
 
     #MOVING
 
     def move(self):
+        self.x = random.randint(0,400)
+        self.y = random.randint(0,400)
         location = self.bot.location()
         new_x = self.x - location.x
         new_y = self.y - location.y
@@ -253,7 +259,7 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
                   if (new_x == self.allies_pos[key].x and new_y == self.allies_pos[key].y):
                        print("Not moving to avoid colliding an ally")
                        return False
-        return True
+        return avoid
 
     def recalculate_angle(self, x, y, current=None):
         if x == 0:
@@ -274,27 +280,32 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
     #SHOOTING
 
     def shoot(self):
-        try:
-            if not self.enemies_pos:
-                angle = self.angle + random.randint(0, 360)
-                distance = random.randint(60,100)
-            else:
-                location = self.bot.location()
-                aim = self.enemies_pos[random.randint(0, len(self.enemies_pos)-1)]
-                new_x = aim.x - location.x
-                new_y = aim.y - location.y
-                angle = int(round(self.recalculate_angle(new_x, new_y), 0))
-                distance = math.hypot(new_x, new_y)
-                if (distance > 100):
-                     distance = 100
-            if(self.avoidAlly(angle,distance) == True):
-                self.bot.cannon(angle,distance)
-                self.state = State.SHOOTING
-                print("Shooting towards {}º , {}m of distance".format(angle, distance))
-
-        except drobots.NoEnoughEnergy:
+        if (self.nshoots == 5):
+            self.nshoots = 0
             self.state = State.MOVING
-            pass
+        else:
+            try:
+                if not self.enemies_pos:
+                    angle = self.angle + random.randint(0, 360)
+                    distance = random.randint(60,100)
+                else:
+                    location = self.bot.location()
+                    aim = self.enemies_pos[random.randint(0, len(self.enemies_pos)-1)]
+                    new_x = aim.x - location.x
+                    new_y = aim.y - location.y
+                    angle = int(round(self.recalculate_angle(new_x, new_y), 0))
+                    distance = math.hypot(new_x, new_y)
+                    if (distance > 100):
+                        distance = 100
+                if(self.avoidAlly(angle,distance) == True):
+                    self.bot.cannon(angle,distance)
+                    self.state = State.SHOOTING
+                    print("Shooting towards {}º , {}m of distance".format(angle, distance))
+                    self.nshoots += 1
+
+            except drobots.NoEnoughEnergy:
+                self.state = State.MOVING
+                pass
 
     def avoidAlly(self, angle, distance):
         avoided = True
@@ -302,10 +313,10 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
         new_x = (distance * math.sin(angle)) + location.x
         new_y = (distance * math.cos(angle)) + location.y
         #Setting the square where the explossion reaches
-        min_x = new_x - 100
-        min_y = new_y - 100
-        max_x = new_x + 100
-        max_y = new_y + 100
+        min_x = new_x - 80
+        min_y = new_y - 80
+        max_x = new_x + 80
+        max_y = new_y + 80
         for key, value in self.allies_pos.items():
             if (self.allies_pos[key].x > min_x and self.allies_pos[key].y > min_y and self.allies_pos[key].x < max_x and self.allies_pos[key].y < max_y):
                 print("Attacker robot avoided shooting his ally {}.".format(key))
