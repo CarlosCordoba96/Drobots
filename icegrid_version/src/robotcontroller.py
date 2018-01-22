@@ -183,8 +183,12 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
         sys.stdout.flush()
 
     def enemies(self, point, current=None):
+        min_x = point.x - 80
+        min_y = point.y - 80
+        max_x = point.x + 80
+        max_y = point.y + 80
         for key, value in self.allies_pos.items():
-             if (point.x != self.allies_pos[key].x and point.y != self.allies_pos[key].y):
+             if ((self.allies_pos[key].x < min_x or self.allies_pos[key].x > max_x) and (self.allies_pos[key].y < min_y or self.allies_pos[key].y > max_y)):
                  if not(point in self.enemies_pos):
                      self.enemies_pos.append(point)
 
@@ -287,7 +291,7 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
             try:
                 if not self.enemies_pos:
                     angle = self.angle + random.randint(0, 360)
-                    distance = random.randint(60,100)
+                    distance = random.randint(81,100)
                 else:
                     location = self.bot.location()
                     aim = self.enemies_pos[random.randint(0, len(self.enemies_pos)-1)]
@@ -297,6 +301,8 @@ class ControllerAttackerI(aux.RobotControllerAttacker):
                     distance = math.hypot(new_x, new_y)
                     if (distance > 100):
                         distance = 100
+                    elif (distance <= 80):  #The objective is to not shoot yourself
+                        distance = 81
                 if(self.avoidAlly(angle,distance) == True):
                     self.bot.cannon(angle,distance)
                     self.state = State.SHOOTING

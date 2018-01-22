@@ -95,8 +95,8 @@
          <server id="Container" activation="always" exe="./container.py" pwd="${application.distrib}">
             <properties>
                <property name="Identity" value="container"/>
-               <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
-               <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
+               <property name="Ice.StdErr" value="${application.distrib}/container-err.txt"/>
+               <property name="Ice.StdOut" value="${application.distrib}/container-out.txt"/>
             </properties>
             <adapter name="ContainerAdapter" endpoints="default" id="${server}.ContainerAdapter"/>
          </server>
@@ -104,8 +104,8 @@
          <server id="Player" activation="manual" exe="./player.py" pwd="${application.distrib}">
             <properties>
                <property name="GameProxy.Locator" value="IceGrid/Locator -t:tcp -h atclab.esi.uclm.es -p 4061"/>
-               <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
-               <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
+               <property name="Ice.StdOut" value="${application.distrib}/player-out.txt"/>
+               <property name="Ice.StdErr" value="${application.distrib}/player-err.txt"/>
                <property name="PlayerName" value="aamo12"/>
                <property name="GameProxy" value="drobots10"/>
             </properties>
@@ -113,8 +113,8 @@
          </server>
          <server id="RCFactory0" activation="always" exe="./factory.py" pwd="${application.distrib}">
             <properties>
-               <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
-               <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
+               <property name="Ice.StdErr" value="${application.distrib}/factory-err.txt"/>
+               <property name="Ice.StdOut" value="${application.distrib}/factory-out.txt"/>
             </properties>
             <adapter name="FactoryAdapter" endpoints="default" id="${server}.FactoryAdapter">
                <object identity="factory0" property="Identity"/>
@@ -124,8 +124,8 @@
       <node name="node2">
          <server id="Detector" activation="always" exe="./detectorcontroller.py" pwd="${application.distrib}">
             <properties>
-               <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
-               <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
+               <property name="Ice.StdErr" value="${application.distrib}/detector-err.txt"/>
+               <property name="Ice.StdOut" value="${application.distrib}/detector-out.txt"/>
             </properties>
             <adapter name="DetectorAdapter" endpoints="default" id="${server}.DetectorAdapter">
                <object identity="Detector" property="Identity"/>
@@ -133,8 +133,8 @@
          </server>
          <server id="RCFactory1" activation="always" exe="./factory.py" pwd="${application.distrib}">
             <properties>
-               <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
-               <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
+               <property name="Ice.StdErr" value="${application.distrib}/factory-err.txt"/>
+               <property name="Ice.StdOut" value="${application.distrib}/factory-out.txt"/>
             </properties>
             <adapter name="FactoryAdapter" endpoints="default" id="${server}.FactoryAdapter">
                <object identity="factory1" property="Identity"/>
@@ -145,8 +145,8 @@
          <server id="RCFactory2" activation="always" exe="./factory.py" pwd="${application.distrib}">
             <properties>
                <property name="Identity" value="factory2"/>
-               <property name="Ice.StdErr" value="${application.distrib}/server-err.txt"/>
-               <property name="Ice.StdOut" value="${application.distrib}/server-out.txt"/>
+               <property name="Ice.StdErr" value="${application.distrib}/factory-err.txt"/>
+               <property name="Ice.StdOut" value="${application.distrib}/factory-out.txt"/>
             </properties>
             <adapter name="FactoryAdapter" endpoints="default" id="${server}.FactoryAdapter">
                <object identity="factory2" property="factory_id"/>
